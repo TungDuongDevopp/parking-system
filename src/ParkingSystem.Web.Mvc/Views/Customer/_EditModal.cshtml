@@ -1,0 +1,40 @@
+﻿@using ParkingSystem.Web.Models.Customers
+@model EditCustomerViewModel
+@{
+    Layout = null;
+}
+<form name="CustomerEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" value="@Model.Customer.Id" />
+    <div class="modal-header">
+        <h5 class="modal-title">@L("EditCustomer")</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label">@L("Name")</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="Name" value="@Model.Customer.Name" required maxlength="100">
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label">@L("PhoneNumber")</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="PhoneNumber" value="@Model.Customer.PhoneNumber" required maxlength="20">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">@L("EmailAddress")</label>
+            <div class="col-md-9">
+                <input type="email" class="form-control" name="Email" value="@Model.Customer.Email" maxlength="255">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">@L("Cancel")</button>
+        <button type="submit" class="btn btn-primary save-button">@L("Save")</button>
+    </div>
+</form>
+<script src="~/view-resources/Views/Customers/_EditModal.js" asp-append-version="true"></script>
+
