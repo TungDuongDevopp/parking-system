@@ -9,7 +9,6 @@ using ParkingSystem.Web.Resources;
 using Castle.Facilities.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +20,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+
 
 namespace ParkingSystem.Web.Startup;
 
@@ -132,8 +132,13 @@ public class Startup
                 Description = "ParkingSystem Web API Documentation",
             });
 
-            // Cho phép tất cả endpoint có HTTP method (bao gồm ABP dynamic API)
-            options.DocInclusionPredicate((docName, description) => true);
+            // Include only actions that have an explicit HTTP method to avoid ambiguous MVC view actions
+            // without a verb (like Error403) from being included in the Swagger spec.
+            options.DocInclusionPredicate((docName, apiDesc) =>
+            {
+                // apiDesc.HttpMethod is a string like "GET" or "POST"; if null, skip the action.
+                return !string.IsNullOrEmpty(apiDesc.HttpMethod);
+            });
 
             options.CustomSchemaIds(type => type.FullName);
 

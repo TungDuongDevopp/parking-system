@@ -35,6 +35,41 @@ namespace ParkingSystem.Customers
             }
             return query.OrderByDescending(x => x.Id);
         }
+
+        public override async Task<CustomerDto> CreateAsync(CreateCustomerDto input)
+        {
+            // Map input to entity
+            var entity = ObjectMapper.Map<Customer>(input);
+
+            // Assign current user id on server side (do not trust client)
+            if (AbpSession.UserId.HasValue)
+            {
+                entity.UserId = AbpSession.UserId.Value;
+            }
+
+            var created = await Repository.InsertAsync(entity);
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+            return MapToEntityDto(created);
+        }
+
+        public override async Task<CustomerDto> UpdateAsync(UpdateCustomerDto input)
+        {
+            // Ensure we preserve UserId and only update allowed fields
+            var entity = await Repository.GetAsync(input.Id);
+            var originalUserId = entity.UserId;
+
+            // Map incoming fields onto existing entity
+            ObjectMapper.Map(input, entity);
+
+            // Preserve UserId
+            entity.UserId = originalUserId;
+
+            await Repository.UpdateAsync(entity);
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+            return MapToEntityDto(entity);
+        }
       
     }
 }
