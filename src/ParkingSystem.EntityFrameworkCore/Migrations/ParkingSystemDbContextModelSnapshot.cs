@@ -1629,6 +1629,173 @@ namespace ParkingSystem.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("ParkingSystem.Entities.ParkingArea", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ParkingCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParkingCode")
+                        .IsUnique();
+
+                    b.ToTable("ParkingAreas");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.ParkingSession", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EntryImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EntryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExitImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ExitTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Fee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ParkingSpotId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlateNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("QuotationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("VehicleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParkingSpotId");
+
+                    b.HasIndex("QuotationId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("ParkingSessions");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.ParkingSpot", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsFree")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ParkingAreaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SpotCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParkingAreaId", "SpotCode")
+                        .IsUnique();
+
+                    b.ToTable("ParkingSpots");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.Quotation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DurationUnit")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("VehicleType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleType", "Duration", "DurationUnit")
+                        .IsUnique();
+
+                    b.ToTable("Quotations");
+                });
+
             modelBuilder.Entity("ParkingSystem.Entities.Staff", b =>
                 {
                     b.Property<long>("Id")
@@ -1689,6 +1856,92 @@ namespace ParkingSystem.Migrations
                         .IsUnique();
 
                     b.ToTable("Staffs");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.Subscription", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("QuotationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("QuotationId");
+
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.Vehicle", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LicensePlate")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("VehicleCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("VehicleType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("VehicleCode")
+                        .IsUnique();
+
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("ParkingSystem.MultiTenancy.Tenant", b =>
@@ -1982,6 +2235,43 @@ namespace ParkingSystem.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ParkingSystem.Entities.ParkingSession", b =>
+                {
+                    b.HasOne("ParkingSystem.Entities.ParkingSpot", "ParkingSpot")
+                        .WithMany()
+                        .HasForeignKey("ParkingSpotId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ParkingSystem.Entities.Quotation", "Quotation")
+                        .WithMany()
+                        .HasForeignKey("QuotationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ParkingSystem.Entities.Vehicle", "Vehicle")
+                        .WithMany("ParkingSessions")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ParkingSpot");
+
+                    b.Navigation("Quotation");
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.ParkingSpot", b =>
+                {
+                    b.HasOne("ParkingSystem.Entities.ParkingArea", "ParkingArea")
+                        .WithMany("ParkingSpots")
+                        .HasForeignKey("ParkingAreaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ParkingArea");
+                });
+
             modelBuilder.Entity("ParkingSystem.Entities.Staff", b =>
                 {
                     b.HasOne("ParkingSystem.Authorization.Users.User", null)
@@ -1989,6 +2279,36 @@ namespace ParkingSystem.Migrations
                         .HasForeignKey("ParkingSystem.Entities.Staff", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.Subscription", b =>
+                {
+                    b.HasOne("ParkingSystem.Entities.Customer", "Customer")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ParkingSystem.Entities.Quotation", "Quotation")
+                        .WithMany()
+                        .HasForeignKey("QuotationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Quotation");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.Vehicle", b =>
+                {
+                    b.HasOne("ParkingSystem.Entities.Customer", "Customer")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("ParkingSystem.MultiTenancy.Tenant", b =>
@@ -2087,6 +2407,23 @@ namespace ParkingSystem.Migrations
                     b.Navigation("Settings");
 
                     b.Navigation("Tokens");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.Customer", b =>
+                {
+                    b.Navigation("Subscriptions");
+
+                    b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.ParkingArea", b =>
+                {
+                    b.Navigation("ParkingSpots");
+                });
+
+            modelBuilder.Entity("ParkingSystem.Entities.Vehicle", b =>
+                {
+                    b.Navigation("ParkingSessions");
                 });
 #pragma warning restore 612, 618
         }

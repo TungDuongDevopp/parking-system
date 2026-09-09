@@ -1,7 +1,9 @@
 ﻿
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
+using Abp.Timing;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,10 +27,14 @@ namespace ParkingSystem.Entities
         public DateTime CreationTime { get; set; }
         public Customer()
         {
-            CreationTime = DateTime.Now;
+            CreationTime = Clock.Now;
         }
 
         public long UserId { get; set; }
+
+        public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
+
+        public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
         public DateTime? LastModificationTime { get; set; }
     }
 }

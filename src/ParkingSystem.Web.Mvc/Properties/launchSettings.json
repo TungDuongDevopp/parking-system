@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44312/",
-      "sslPort": 44312
+      "applicationUrl": "https://localhost:52789/",
+      "sslPort": 52789
     }
   },
   "profiles": {
@@ -18,7 +18,7 @@
     "ParkingSystem.Web": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44312",
+      "applicationUrl": "https://localhost:52789",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
