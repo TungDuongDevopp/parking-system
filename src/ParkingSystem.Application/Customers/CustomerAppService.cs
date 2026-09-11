@@ -3,7 +3,9 @@ using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
+using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Authorization;
+using ParkingSystem.Authorization.Users;
 using ParkingSystem.Customers.Dto;
 using ParkingSystem.Entities;
 using System.Linq;
@@ -16,8 +18,11 @@ namespace ParkingSystem.Customers
     [AbpAuthorize(PermissionNames.Pages_Customers)]
     public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, long, PagedCustomerResultRequestDto, CreateCustomerDto, UpdateCustomerDto>, ICustomerAppService
     {
-        public CustomerAppService(IRepository<Customer, long> repository) : base(repository)
+        private readonly IRepository<User, long> _userRepository;
+
+        public CustomerAppService(IRepository<Customer, long> repository, IRepository<User, long> userRepository) : base(repository)
         {
+            _userRepository = userRepository;
         }
         protected override IQueryable<Customer> CreateFilteredQuery(PagedCustomerResultRequestDto input)
         {
@@ -44,7 +49,15 @@ namespace ParkingSystem.Customers
             // Assign current user id on server side (do not trust client)
             if (AbpSession.UserId.HasValue)
             {
-                entity.UserId = AbpSession.UserId.Value;
+                var userId = AbpSession.UserId.Value;
+                // Ensure the user exists before assigning
+                var exists = await _userRepository.GetAll().AnyAsync(u => u.Id == userId);
+                if (!exists)
+                {
+                    throw new Abp.AbpException("Current user does not exist.");
+                }
+
+                entity.UserId = userId;
             }
 
             var created = await Repository.InsertAsync(entity);

@@ -3,6 +3,10 @@
 public enum PaymentStatus
 {
     Pending = 0,
-    Completed = 1,
-    Failed = 2
+    PartiallyPaid = 1,
+    Paid = 2,
+    Expired = 3,
+    Refunding = 4,
+    Refunded = 5,
+    Failed = 6
 }
