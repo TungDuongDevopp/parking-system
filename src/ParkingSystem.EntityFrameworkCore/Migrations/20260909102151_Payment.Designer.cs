@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingSystem.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using ParkingSystem.EntityFrameworkCore;
 namespace ParkingSystem.Migrations
 {
     [DbContext(typeof(ParkingSystemDbContext))]
-    partial class ParkingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260909102151_Payment")]
+    partial class Payment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1598,9 +1601,6 @@ namespace ParkingSystem.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
@@ -1646,9 +1646,6 @@ namespace ParkingSystem.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -1746,9 +1743,6 @@ namespace ParkingSystem.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsFree")
                         .HasColumnType("bit");
 
@@ -1817,50 +1811,6 @@ namespace ParkingSystem.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("ParkingSystem.Entities.PaymentTransaction", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("PaymentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TransactionCode")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("TransactionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PaymentId");
-
-                    b.HasIndex("TransactionCode")
-                        .IsUnique();
-
-                    b.ToTable("PaymentTransactions");
-                });
-
             modelBuilder.Entity("ParkingSystem.Entities.Quotation", b =>
                 {
                     b.Property<long>("Id")
@@ -1877,9 +1827,6 @@ namespace ParkingSystem.Migrations
 
                     b.Property<int>("DurationUnit")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -1925,9 +1872,6 @@ namespace ParkingSystem.Migrations
 
                     b.Property<DateTime>("HiredDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -2023,9 +1967,6 @@ namespace ParkingSystem.Migrations
 
                     b.Property<long>("CustomerId")
                         .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -2391,17 +2332,6 @@ namespace ParkingSystem.Migrations
                     b.Navigation("Subscription");
                 });
 
-            modelBuilder.Entity("ParkingSystem.Entities.PaymentTransaction", b =>
-                {
-                    b.HasOne("ParkingSystem.Entities.Payment", "Payment")
-                        .WithMany("PaymentTransactions")
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Payment");
-                });
-
             modelBuilder.Entity("ParkingSystem.Entities.Staff", b =>
                 {
                     b.HasOne("ParkingSystem.Authorization.Users.User", null)
@@ -2549,11 +2479,6 @@ namespace ParkingSystem.Migrations
             modelBuilder.Entity("ParkingSystem.Entities.ParkingArea", b =>
                 {
                     b.Navigation("ParkingSpots");
-                });
-
-            modelBuilder.Entity("ParkingSystem.Entities.Payment", b =>
-                {
-                    b.Navigation("PaymentTransactions");
                 });
 
             modelBuilder.Entity("ParkingSystem.Entities.Subscription", b =>
