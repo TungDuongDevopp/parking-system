@@ -8,14 +8,26 @@ namespace ParkingSystem.EntityFrameworkCore.Seed.Host;
 
 public class DefaultLanguagesCreator
 {
-    public static List<ApplicationLanguage> InitialLanguages => GetInitialLanguages();
-
     private readonly ParkingSystemDbContext _context;
 
-    private static List<ApplicationLanguage> GetInitialLanguages()
+    public DefaultLanguagesCreator(ParkingSystemDbContext context)
     {
-        var tenantId = ParkingSystemConsts.MultiTenancyEnabled ? null : (int?)MultiTenancyConsts.DefaultTenantId;
-        return new List<ApplicationLanguage>
+        _context = context;
+    }
+
+    public void Create()
+    {
+        CreateLanguages();
+    }
+
+    private void CreateLanguages()
+    {
+        // When multi-tenancy is disabled, ABP expects a technical default tenant record.
+        // Create languages for the technical default tenant (id = 1) so localization works in single-tenant mode.
+        var defaultTenant = _context.Tenants.IgnoreQueryFilters().FirstOrDefault(t => t.TenancyName == AbpTenantBase.DefaultTenantName);
+        int? tenantId = defaultTenant?.Id;
+
+        var languages = new List<ApplicationLanguage>
         {
             new ApplicationLanguage(tenantId, "en", "English", "famfamfam-flags us"),
             new ApplicationLanguage(tenantId, "ar", "العربية", "famfamfam-flags sa"),
@@ -31,21 +43,8 @@ public class DefaultLanguagesCreator
             new ApplicationLanguage(tenantId, "nl", "Nederlands", "famfamfam-flags nl"),
             new ApplicationLanguage(tenantId, "ja", "日本語", "famfamfam-flags jp")
         };
-    }
 
-    public DefaultLanguagesCreator(ParkingSystemDbContext context)
-    {
-        _context = context;
-    }
-
-    public void Create()
-    {
-        CreateLanguages();
-    }
-
-    private void CreateLanguages()
-    {
-        foreach (var language in InitialLanguages)
+        foreach (var language in languages)
         {
             AddLanguageIfNotExists(language);
         }

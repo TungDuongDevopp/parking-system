@@ -24,9 +24,9 @@ public static class SeedHelper
         // Host seed
         new InitialHostDbBuilder(context).Create();
 
-        // Default tenant seed (in host database).
-        new DefaultTenantBuilder(context).Create();
-        new TenantRoleAndUserBuilder(context, 1).Create();
+        // Multi-tenancy is disabled for runtime. Do not create default tenant or tenant-specific
+        // roles/users during host seeding. Builders are preserved for possible future
+        // re-enablement of multi-tenancy but are intentionally NOT executed here.
     }
 
     private static void WithDbContext<TDbContext>(IIocResolver iocResolver, Action<TDbContext> contextAction)

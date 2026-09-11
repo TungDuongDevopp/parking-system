@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ParkingSystem.Entities;
 
 [Table("Staffs")]
-public class Staff : Entity<long>, IHasCreationTime, IHasModificationTime
+public class Staff : Entity<long>, IHasCreationTime, IHasModificationTime, ISoftDelete
 {
     [Required]
     [StringLength(100)]
@@ -44,10 +44,12 @@ public class Staff : Entity<long>, IHasCreationTime, IHasModificationTime
     public string? Address { get; set; }
     public DateTime? LastModificationTime { get; set; }
     public long UserId { get; set; }
+    public bool IsDeleted { get; set; }
 
     public Staff()
     {
         CreationTime = Clock.Now;
         Status = StaffStatus.Active; // Default status
+        IsDeleted = false;
     }
 }

@@ -254,3 +254,5 @@ paket-files/
 src/ParkingSystem.Web.Mvc/secrets.json
 src/ParkingSystem.Web.Host/secrets.json
 src/ParkingSystem.Migrator/secrets.json
+
+**/App_Data/Logs/

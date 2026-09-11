@@ -1,4 +1,5 @@
 using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
@@ -11,6 +12,8 @@ using ParkingSystem.Entities;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ParkingSystem.Exceptions;
 
 
 namespace ParkingSystem.Customers
@@ -60,6 +63,13 @@ namespace ParkingSystem.Customers
                 entity.UserId = userId;
             }
 
+            // Prevent creating when a customer with same phone or email already exists (including soft-deleted)
+            var exists = await Repository.GetAll().IgnoreQueryFilters().AnyAsync(x => x.PhoneNumber == input.PhoneNumber || (input.Email != null && x.Email == input.Email));
+            if (exists)
+            {
+                throw new DuplicateResourceException("A customer with the same phone number or email already exists.");
+            }
+
             var created = await Repository.InsertAsync(entity);
             await CurrentUnitOfWork.SaveChangesAsync();
 
@@ -68,8 +78,18 @@ namespace ParkingSystem.Customers
 
         public override async Task<CustomerDto> UpdateAsync(UpdateCustomerDto input)
         {
+            // Load entity including soft-deleted ones to detect deleted state
+            var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
+            if (entity == null)
+            {
+                throw new ResourceNotFoundException("Customer not found with id: "+input.Id);
+            }
+            if (entity.IsDeleted)
+            {
+                throw new CannotManipulateException("Customer cannot be manipulated in its current status");
+            }
+
             // Ensure we preserve UserId and only update allowed fields
-            var entity = await Repository.GetAsync(input.Id);
             var originalUserId = entity.UserId;
 
             // Map incoming fields onto existing entity
@@ -83,6 +103,23 @@ namespace ParkingSystem.Customers
 
             return MapToEntityDto(entity);
         }
-      
+
+        public override async Task DeleteAsync(EntityDto<long> input)
+        {
+            // Load entity including soft-deleted ones so we can return proper errors
+            var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
+            if (entity == null)
+            {
+                throw new ResourceNotFoundException("Customer not found with id: " + input.Id);
+            }
+            if (entity.IsDeleted)
+            {
+                throw new CannotManipulateException("Customer cannot be manipulated in its current status");
+            }
+
+            await Repository.DeleteAsync(entity);
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+        }
     }
 }
