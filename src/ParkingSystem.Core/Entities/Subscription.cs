@@ -4,6 +4,7 @@ using Abp.Domain.Entities.Auditing;
 using Abp.Timing;
 using ParkingSystem.Entities.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -38,4 +39,6 @@ public class Subscription: Entity<long>, IHasCreationTime, IHasModificationTime
         CreationTime = Clock.Now;
         Status = SubcriptionStatus.PENDING;
     }
+
+    public ICollection<Payment> Payments { get; set; } = new List<Payment>();
 }

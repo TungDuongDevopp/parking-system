@@ -24,6 +24,10 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
 
     public DbSet<ParkingSession> ParkingSessions { get; set; }
 
+    public DbSet<Payment> Payments { get; set; }
+
+    public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -134,5 +138,24 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
+        //Payment entity configuration
+        modelBuilder.Entity<Payment>()
+            .HasOne(p => p.Subscription)
+            .WithMany(s => s.Payments)
+            .HasForeignKey(p => p.SubscriptionId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        //PaymentTransaction entity configuration
+        modelBuilder.Entity<PaymentTransaction>()
+            .HasOne(pt => pt.Payment)
+            .WithMany(p => p.PaymentTransactions)
+            .HasForeignKey(pt => pt.PaymentId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PaymentTransaction>()
+            .HasIndex(pt => pt.TransactionCode)
+            .IsUnique();
     }
 }

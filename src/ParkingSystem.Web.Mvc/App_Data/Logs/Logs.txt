@@ -12270,3 +12270,269 @@ DEBUG 2026-09-09 16:13:44,656 [28   ] , Culture=neutral, PublicKeyToken=null]] -
 DEBUG 2026-09-09 16:13:44,657 [28   ] Abp.Modules.AbpModuleManager             - Shutting down completed.
 INFO  2026-09-09 16:13:44,663 [28   ] Microsoft.Hosting.Lifetime               - Application is shutting down...
 DEBUG 2026-09-09 16:13:44,673 [23   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is connected: {"ConnectionId":"pxIhVmw69NeHPaBilzVtbw","IpAddress":"::1","TenantId":1,"UserId":2,"ConnectTime":"2026-09-09T16:13:44.6730653+07:00","Properties":{}}
+DEBUG 2026-09-09 17:56:44,838 [2    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2026-09-09 17:56:44,981 [2    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2026-09-09 17:56:44,987 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: ParkingSystem.Web.Startup.ParkingSystemWebMvcModule, ParkingSystem.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,989 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: ParkingSystem.ParkingSystemWebCoreModule, ParkingSystem.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,989 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: ParkingSystem.ParkingSystemApplicationModule, ParkingSystem.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,990 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: ParkingSystem.ParkingSystemCoreModule, ParkingSystem.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,990 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,990 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,990 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,991 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,991 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: ParkingSystem.EntityFrameworkCore.ParkingSystemEntityFrameworkModule, ParkingSystem.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,991 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,991 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,992 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,992 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,992 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,992 [2    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=10.2.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:44,993 [2    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2026-09-09 17:56:45,050 [2    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-09-09 17:56:45,051 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-09-09 17:56:45,051 [2    ] o.Configuration.LanguageManagementConfig - Converted ParkingSystem (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-09-09 17:56:45,051 [2    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2026-09-09 17:56:45,324 [2    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: ParkingSystem.EntityFrameworkCore.ParkingSystemDbContext, ParkingSystem.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2026-09-09 17:56:45,453 [2    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2026-09-09 17:56:45,486 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2026-09-09 17:56:45,492 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2026-09-09 17:56:45,495 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: ParkingSystem
+DEBUG 2026-09-09 17:56:45,496 [2    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2026-09-09 17:56:45,503 [2    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2026-09-09 17:56:45,511 [2    ] , Culture=neutral, PublicKeyToken=null]] - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker`2[[ParkingSystem.MultiTenancy.Tenant, ParkingSystem.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[ParkingSystem.Authorization.Users.User, ParkingSystem.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+DEBUG 2026-09-09 17:56:45,525 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 12 classes define auto mapping attributes
+DEBUG 2026-09-09 17:56:45,525 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Users.Dto.CreateUserDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Users.Dto.UserDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Sessions.Dto.UserLoginInfoDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Roles.Dto.PermissionDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.MultiTenancy.Dto.TenantDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Customers.Dto.CreateCustomerDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Customers.Dto.CustomerDto
+DEBUG 2026-09-09 17:56:45,527 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Customers.Dto.UpdateCustomerDto
+DEBUG 2026-09-09 17:56:45,528 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Web.Views.Shared.Components.TenantChange.TenantChangeViewModel
+DEBUG 2026-09-09 17:56:45,528 [2    ] Abp.AutoMapper.AbpAutoMapperModule       - ParkingSystem.Web.Models.Roles.EditRoleModalViewModel
+WARN  2026-09-09 17:56:47,947 [2    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'Fee' on entity type 'ParkingSession'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2026-09-09 17:56:47,954 [2    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'ExpectedAmount' on entity type 'Payment'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2026-09-09 17:56:47,961 [2    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'ReceivedAmount' on entity type 'Payment'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2026-09-09 17:56:47,968 [2    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'Amount' on entity type 'PaymentTransaction'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2026-09-09 17:56:47,975 [2    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'Price' on entity type 'Quotation'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+INFO  2026-09-09 17:56:51,962 [2    ] tCore.Builder.RequestLocalizationOptions - Supported Request Localization Cultures: en,es-MX,fr,de,it,nl,pt-BR,tr,ru,ar,fa,ja,zh-Hans
+INFO  2026-09-09 17:56:52,788 [2    ] Microsoft.Hosting.Lifetime               - Now listening on: https://localhost:52789
+INFO  2026-09-09 17:56:53,078 [2    ] Microsoft.Hosting.Lifetime               - Application started. Press Ctrl+C to shut down.
+INFO  2026-09-09 17:56:53,080 [2    ] Microsoft.Hosting.Lifetime               - Hosting environment: Development
+INFO  2026-09-09 17:56:53,082 [2    ] Microsoft.Hosting.Lifetime               - Content root path: D:\Parking-System\aspnet-core\src\ParkingSystem.Web.Mvc
+INFO  2026-09-09 17:56:53,793 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/ - - -
+INFO  2026-09-09 17:56:54,544 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Web.Controllers.HomeController.Index (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:56:54,917 [6    ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller ParkingSystem.Web.Controllers.HomeController (ParkingSystem.Web.Mvc).
+INFO  2026-09-09 17:56:56,026 [15   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executing ViewResult, running view Index.
+INFO  2026-09-09 17:56:59,166 [15   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executed ViewResult - view Index executed in 3153.0321ms.
+INFO  2026-09-09 17:56:59,177 [15   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Web.Controllers.HomeController.Index (ParkingSystem.Web.Mvc) in 4253.8289ms
+INFO  2026-09-09 17:56:59,212 [15   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Web.Controllers.HomeController.Index (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:56:59,216 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_vs/browserLink - - -
+INFO  2026-09-09 17:56:59,220 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2026-09-09 17:56:59,224 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - - -
+INFO  2026-09-09 17:56:59,245 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - - -
+INFO  2026-09-09 17:56:59,350 [6    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - 200 14947 application/javascript;+charset=utf-8 110.4147ms
+INFO  2026-09-09 17:56:59,360 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:56:59,388 [10   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:56:59,502 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/ - 200 - text/html;+charset=utf-8 5736.3333ms
+INFO  2026-09-09 17:56:59,541 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 POST https://localhost:52789/signalr/negotiate?negotiateVersion=1 - - 0
+INFO  2026-09-09 17:56:59,589 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr/negotiate'
+INFO  2026-09-09 17:56:59,615 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr/negotiate'
+INFO  2026-09-09 17:56:59,619 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 POST https://localhost:52789/signalr/negotiate?negotiateVersion=1 - 200 316 application/json 110.4819ms
+INFO  2026-09-09 17:56:59,627 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 CONNECT https://localhost:52789/signalr?id=1sJF4KunfWRNvYW2tQTr8Q - - -
+INFO  2026-09-09 17:56:59,655 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr'
+INFO  2026-09-09 17:56:59,675 [10   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetScripts", controller = "AbpScripts", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetScripts(System.String, Boolean) on controller Abp.AspNetCore.Mvc.Controllers.AbpScriptsController (Abp.AspNetCore).
+INFO  2026-09-09 17:56:59,682 [14   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpServiceProxies", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ContentResult GetAll(Abp.AspNetCore.Mvc.Proxying.ApiProxyGenerationModel) on controller Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController (Abp.AspNetCore).
+INFO  2026-09-09 17:56:59,792 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 539.4647ms
+INFO  2026-09-09 17:56:59,965 [14   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript
+DEBUG 2026-09-09 17:56:59,970 [21   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is connected: {"ConnectionId":"Rhaxd39rqmlj9bllvfyCQA","IpAddress":"::1","TenantId":1,"UserId":2,"ConnectTime":"2026-09-09T17:56:59.8756809+07:00","Properties":{}}
+INFO  2026-09-09 17:56:59,998 [20   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore) in 288.6282ms
+INFO  2026-09-09 17:57:00,004 [20   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:00,035 [20   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - 200 12510 application/x-javascript 825.2476ms
+DEBUG 2026-09-09 17:57:00,083 [21   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is registered: Rhaxd39rqmlj9bllvfyCQA
+INFO  2026-09-09 17:57:00,180 [19   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript; charset=utf-8
+INFO  2026-09-09 17:57:00,193 [21   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore) in 512.1987ms
+INFO  2026-09-09 17:57:00,199 [21   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:00,204 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - 200 17760 application/x-javascript;+charset=utf-8 1019.3778ms
+INFO  2026-09-09 17:57:06,360 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/Customer - - -
+INFO  2026-09-09 17:57:06,394 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Web.Controllers.CustomerController.Index (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:06,421 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Customer", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ParkingSystem.Web.Controllers.CustomerController (ParkingSystem.Web.Mvc).
+INFO  2026-09-09 17:57:07,181 [21   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executing ViewResult, running view Index.
+INFO  2026-09-09 17:57:07,551 [20   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executed ViewResult - view Index executed in 344.1783ms.
+INFO  2026-09-09 17:57:07,581 [20   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Web.Controllers.CustomerController.Index (ParkingSystem.Web.Mvc) in 1130.4863ms
+INFO  2026-09-09 17:57:07,590 [20   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Web.Controllers.CustomerController.Index (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:07,595 [20   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/Customer - 200 - text/html;+charset=utf-8 1236.5729ms
+INFO  2026-09-09 17:57:07,608 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 POST https://localhost:52789/signalr/negotiate?negotiateVersion=1 - - 0
+INFO  2026-09-09 17:57:07,635 [20   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - - -
+INFO  2026-09-09 17:57:07,658 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2026-09-09 17:57:07,683 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_vs/browserLink - - -
+INFO  2026-09-09 17:57:07,709 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - - -
+INFO  2026-09-09 17:57:07,746 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr/negotiate'
+INFO  2026-09-09 17:57:07,778 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - 200 14947 application/javascript;+charset=utf-8 138.2204ms
+INFO  2026-09-09 17:57:07,804 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr/negotiate'
+INFO  2026-09-09 17:57:07,828 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 POST https://localhost:52789/signalr/negotiate?negotiateVersion=1 - 200 316 application/json 200.2489ms
+INFO  2026-09-09 17:57:07,833 [20   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:07,866 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:07,879 [6    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 CONNECT https://localhost:52789/signalr?id=AVhSESlcVDLYzBgMeaqQ3Q - - -
+INFO  2026-09-09 17:57:07,909 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr'
+INFO  2026-09-09 17:57:07,943 [20   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpServiceProxies", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ContentResult GetAll(Abp.AspNetCore.Mvc.Proxying.ApiProxyGenerationModel) on controller Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController (Abp.AspNetCore).
+INFO  2026-09-09 17:57:07,974 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetScripts", controller = "AbpScripts", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetScripts(System.String, Boolean) on controller Abp.AspNetCore.Mvc.Controllers.AbpScriptsController (Abp.AspNetCore).
+INFO  2026-09-09 17:57:08,009 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 310.1593ms
+DEBUG 2026-09-09 17:57:08,015 [8    ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is connected: {"ConnectionId":"Y_XfDzW5E6l1Kx_caQ-AcQ","IpAddress":"::1","TenantId":1,"UserId":2,"ConnectTime":"2026-09-09T17:57:08.0104264+07:00","Properties":{}}
+INFO  2026-09-09 17:57:08,110 [20   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript
+INFO  2026-09-09 17:57:08,138 [14   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore) in 168.5145ms
+DEBUG 2026-09-09 17:57:08,141 [8    ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is registered: Y_XfDzW5E6l1Kx_caQ-AcQ
+INFO  2026-09-09 17:57:08,174 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:08,196 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - 200 12510 application/x-javascript 566.2501ms
+DEBUG 2026-09-09 17:57:08,202 [10   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is disconnected: Rhaxd39rqmlj9bllvfyCQA
+INFO  2026-09-09 17:57:08,215 [23   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript; charset=utf-8
+INFO  2026-09-09 17:57:08,241 [24   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore) in 242.6174ms
+INFO  2026-09-09 17:57:08,245 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:08,252 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - 200 17760 application/x-javascript;+charset=utf-8 610.4552ms
+INFO  2026-09-09 17:57:08,256 [10   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr'
+INFO  2026-09-09 17:57:08,261 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 CONNECT https://localhost:52789/signalr?id=1sJF4KunfWRNvYW2tQTr8Q - 200 - - 8634.7487ms
+INFO  2026-09-09 17:57:08,297 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/api/services/app/Customer/GetAll?keyword=&sorting=&skipCount=0&maxResultCount=10 - application/json -
+INFO  2026-09-09 17:57:08,304 [10   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Customers.CustomerAppService.GetAllAsync (ParkingSystem.Application)'
+INFO  2026-09-09 17:57:08,330 [10   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetAll", controller = "Customer"}. Executing controller action with signature System.Threading.Tasks.Task`1[Abp.Application.Services.Dto.PagedResultDto`1[ParkingSystem.Customers.Dto.CustomerDto]] GetAllAsync(ParkingSystem.Customers.Dto.PagedCustomerResultRequestDto) on controller ParkingSystem.Customers.CustomerAppService (ParkingSystem.Application).
+INFO  2026-09-09 17:57:09,000 [23   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-09-09 17:57:09,040 [23   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Customers.CustomerAppService.GetAllAsync (ParkingSystem.Application) in 705.6532ms
+INFO  2026-09-09 17:57:09,044 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Customers.CustomerAppService.GetAllAsync (ParkingSystem.Application)'
+INFO  2026-09-09 17:57:09,048 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/api/services/app/Customer/GetAll?keyword=&sorting=&skipCount=0&maxResultCount=10 - 200 - application/json;+charset=utf-8 751.2027ms
+INFO  2026-09-09 17:57:17,485 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/Account/Logout - - -
+INFO  2026-09-09 17:57:17,500 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Web.Controllers.AccountController.Logout (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:17,523 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Logout", controller = "Account", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Logout() on controller ParkingSystem.Web.Controllers.AccountController (ParkingSystem.Web.Mvc).
+INFO  2026-09-09 17:57:19,100 [23   ] tion.Cookies.CookieAuthenticationHandler - AuthenticationScheme: Identity.Application signed out.
+INFO  2026-09-09 17:57:19,109 [23   ] tion.Cookies.CookieAuthenticationHandler - AuthenticationScheme: Identity.External signed out.
+INFO  2026-09-09 17:57:19,114 [23   ] tion.Cookies.CookieAuthenticationHandler - AuthenticationScheme: Identity.TwoFactorUserId signed out.
+INFO  2026-09-09 17:57:19,179 [23   ] ft.AspNetCore.Mvc.RedirectToActionResult - Executing RedirectResult, redirecting to /Account/Login.
+INFO  2026-09-09 17:57:19,184 [23   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Web.Controllers.AccountController.Logout (ParkingSystem.Web.Mvc) in 1657.244ms
+INFO  2026-09-09 17:57:19,188 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Web.Controllers.AccountController.Logout (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:19,195 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/Account/Logout - 302 - - 1712.4461ms
+INFO  2026-09-09 17:57:19,203 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/Account/Login - - -
+INFO  2026-09-09 17:57:19,353 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Web.Controllers.AccountController.Login (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:19,367 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Login", controller = "Account", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Login(System.String, System.String, System.String) on controller ParkingSystem.Web.Controllers.AccountController (ParkingSystem.Web.Mvc).
+INFO  2026-09-09 17:57:19,452 [24   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executing ViewResult, running view Login.
+INFO  2026-09-09 17:57:19,964 [9    ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executed ViewResult - view Login executed in 516.7686ms.
+INFO  2026-09-09 17:57:19,967 [9    ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Web.Controllers.AccountController.Login (ParkingSystem.Web.Mvc) in 596.3986ms
+INFO  2026-09-09 17:57:19,972 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Web.Controllers.AccountController.Login (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:19,978 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/Account/Login - 200 - text/html;+charset=utf-8 774.0661ms
+DEBUG 2026-09-09 17:57:19,987 [9    ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is disconnected: Y_XfDzW5E6l1Kx_caQ-AcQ
+INFO  2026-09-09 17:57:19,991 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr'
+INFO  2026-09-09 17:57:19,997 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 CONNECT https://localhost:52789/signalr?id=AVhSESlcVDLYzBgMeaqQ3Q - 200 - - 12118.1645ms
+INFO  2026-09-09 17:57:20,106 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2026-09-09 17:57:20,130 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - - -
+INFO  2026-09-09 17:57:20,133 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - - -
+INFO  2026-09-09 17:57:20,163 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_vs/browserLink - - -
+INFO  2026-09-09 17:57:20,187 [20   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - 200 14947 application/javascript;+charset=utf-8 101.7298ms
+INFO  2026-09-09 17:57:20,227 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:20,231 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:20,241 [9    ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpServiceProxies", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ContentResult GetAll(Abp.AspNetCore.Mvc.Proxying.ApiProxyGenerationModel) on controller Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController (Abp.AspNetCore).
+INFO  2026-09-09 17:57:20,246 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetScripts", controller = "AbpScripts", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetScripts(System.String, Boolean) on controller Abp.AspNetCore.Mvc.Controllers.AbpScriptsController (Abp.AspNetCore).
+INFO  2026-09-09 17:57:20,252 [9    ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript
+INFO  2026-09-09 17:57:20,258 [9    ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore) in 13.4975ms
+INFO  2026-09-09 17:57:20,263 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:20,295 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - 200 12510 application/x-javascript 201.2133ms
+INFO  2026-09-09 17:57:20,311 [23   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript; charset=utf-8
+INFO  2026-09-09 17:57:20,317 [24   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore) in 66.2546ms
+INFO  2026-09-09 17:57:20,323 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:20,328 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - 200 16367 application/x-javascript;+charset=utf-8 261.1067ms
+INFO  2026-09-09 17:57:20,379 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 284.6114ms
+INFO  2026-09-09 17:57:28,382 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 POST https://localhost:52789/Account/Login - application/x-www-form-urlencoded 261
+INFO  2026-09-09 17:57:28,386 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Web.Controllers.AccountController.Login (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:28,409 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Login", controller = "Account", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.JsonResult] Login(ParkingSystem.Web.Models.Account.LoginViewModel, System.String, System.String) on controller ParkingSystem.Web.Controllers.AccountController (ParkingSystem.Web.Mvc).
+INFO  2026-09-09 17:57:29,672 [19   ] tion.Cookies.CookieAuthenticationHandler - AuthenticationScheme: Identity.Application signed in.
+INFO  2026-09-09 17:57:29,727 [19   ] rastructure.SystemTextJsonResultExecutor - Executing JsonResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-09-09 17:57:29,740 [19   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Web.Controllers.AccountController.Login (ParkingSystem.Web.Mvc) in 1326.8028ms
+INFO  2026-09-09 17:57:29,745 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Web.Controllers.AccountController.Login (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:29,751 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 POST https://localhost:52789/Account/Login - 200 - application/json;+charset=utf-8 1368.8965ms
+INFO  2026-09-09 17:57:29,779 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/Users - - -
+INFO  2026-09-09 17:57:29,805 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Web.Controllers.UsersController.Index (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:29,826 [19   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Users", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Index() on controller ParkingSystem.Web.Controllers.UsersController (ParkingSystem.Web.Mvc).
+INFO  2026-09-09 17:57:30,346 [19   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executing ViewResult, running view Index.
+INFO  2026-09-09 17:57:30,547 [23   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executed ViewResult - view Index executed in 203.0347ms.
+INFO  2026-09-09 17:57:30,551 [23   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Web.Controllers.UsersController.Index (ParkingSystem.Web.Mvc) in 721.2587ms
+INFO  2026-09-09 17:57:30,556 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Web.Controllers.UsersController.Index (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:30,561 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/Users - 200 - text/html;+charset=utf-8 782.5369ms
+INFO  2026-09-09 17:57:30,656 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2026-09-09 17:57:30,692 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - - -
+INFO  2026-09-09 17:57:30,696 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_vs/browserLink - - -
+INFO  2026-09-09 17:57:30,700 [20   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - - -
+INFO  2026-09-09 17:57:30,704 [9    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - 200 14947 application/javascript;+charset=utf-8 67.3592ms
+INFO  2026-09-09 17:57:30,726 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 POST https://localhost:52789/signalr/negotiate?negotiateVersion=1 - - 0
+INFO  2026-09-09 17:57:30,730 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:30,734 [20   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:30,738 [10   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr/negotiate'
+INFO  2026-09-09 17:57:30,768 [10   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr/negotiate'
+INFO  2026-09-09 17:57:30,793 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 POST https://localhost:52789/signalr/negotiate?negotiateVersion=1 - 200 316 application/json 63.4521ms
+INFO  2026-09-09 17:57:30,818 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpServiceProxies", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ContentResult GetAll(Abp.AspNetCore.Mvc.Proxying.ApiProxyGenerationModel) on controller Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController (Abp.AspNetCore).
+INFO  2026-09-09 17:57:30,821 [20   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetScripts", controller = "AbpScripts", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetScripts(System.String, Boolean) on controller Abp.AspNetCore.Mvc.Controllers.AbpScriptsController (Abp.AspNetCore).
+INFO  2026-09-09 17:57:30,826 [10   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 CONNECT https://localhost:52789/signalr?id=_zV4lxrL3a3TyPaQZxXQfg - - -
+INFO  2026-09-09 17:57:30,859 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 172.1868ms
+INFO  2026-09-09 17:57:30,885 [10   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr'
+INFO  2026-09-09 17:57:30,912 [23   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript
+INFO  2026-09-09 17:57:30,918 [24   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore) in 94.8485ms
+INFO  2026-09-09 17:57:30,951 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:30,975 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - 200 12510 application/x-javascript 319.2111ms
+DEBUG 2026-09-09 17:57:30,976 [19   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is connected: {"ConnectionId":"pCKgKEHvLDR0QMAm1s-6LA","IpAddress":"::1","TenantId":1,"UserId":2,"ConnectTime":"2026-09-09T17:57:30.9756841+07:00","Properties":{}}
+DEBUG 2026-09-09 17:57:30,978 [19   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is registered: pCKgKEHvLDR0QMAm1s-6LA
+INFO  2026-09-09 17:57:30,984 [20   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript; charset=utf-8
+INFO  2026-09-09 17:57:30,989 [23   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore) in 163.6781ms
+INFO  2026-09-09 17:57:30,992 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:30,997 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - 200 17760 application/x-javascript;+charset=utf-8 336.5366ms
+INFO  2026-09-09 17:57:31,038 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/api/services/app/User/GetAll?keyword=&sorting=&skipCount=0&maxResultCount=10 - application/json -
+INFO  2026-09-09 17:57:31,049 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Users.UserAppService.GetAllAsync (ParkingSystem.Application)'
+INFO  2026-09-09 17:57:31,063 [23   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetAll", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Abp.Application.Services.Dto.PagedResultDto`1[ParkingSystem.Users.Dto.UserDto]] GetAllAsync(ParkingSystem.Users.Dto.PagedUserResultRequestDto) on controller ParkingSystem.Users.UserAppService (ParkingSystem.Application).
+INFO  2026-09-09 17:57:33,758 [24   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-09-09 17:57:33,824 [24   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Users.UserAppService.GetAllAsync (ParkingSystem.Application) in 2751.3011ms
+INFO  2026-09-09 17:57:33,828 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Users.UserAppService.GetAllAsync (ParkingSystem.Application)'
+INFO  2026-09-09 17:57:33,832 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/api/services/app/User/GetAll?keyword=&sorting=&skipCount=0&maxResultCount=10 - 200 - application/json;+charset=utf-8 2794.7087ms
+INFO  2026-09-09 17:57:42,496 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/Customer - - -
+INFO  2026-09-09 17:57:42,505 [21   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Web.Controllers.CustomerController.Index (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:42,512 [21   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Customer", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ParkingSystem.Web.Controllers.CustomerController (ParkingSystem.Web.Mvc).
+INFO  2026-09-09 17:57:42,554 [24   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executing ViewResult, running view Index.
+INFO  2026-09-09 17:57:42,639 [24   ] Core.Mvc.ViewFeatures.ViewResultExecutor - Executed ViewResult - view Index executed in 84.2686ms.
+INFO  2026-09-09 17:57:42,641 [24   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Web.Controllers.CustomerController.Index (ParkingSystem.Web.Mvc) in 126.2773ms
+INFO  2026-09-09 17:57:42,644 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Web.Controllers.CustomerController.Index (ParkingSystem.Web.Mvc)'
+INFO  2026-09-09 17:57:42,672 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/Customer - 200 - text/html;+charset=utf-8 151.8903ms
+DEBUG 2026-09-09 17:57:42,683 [23   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is disconnected: pCKgKEHvLDR0QMAm1s-6LA
+INFO  2026-09-09 17:57:42,686 [23   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr'
+INFO  2026-09-09 17:57:42,689 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 CONNECT https://localhost:52789/signalr?id=_zV4lxrL3a3TyPaQZxXQfg - 200 - - 11864.2212ms
+INFO  2026-09-09 17:57:42,695 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - - -
+INFO  2026-09-09 17:57:42,733 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_vs/browserLink - - -
+INFO  2026-09-09 17:57:42,771 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2026-09-09 17:57:42,797 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 POST https://localhost:52789/signalr/negotiate?negotiateVersion=1 - - 0
+INFO  2026-09-09 17:57:42,828 [20   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - - -
+INFO  2026-09-09 17:57:42,867 [23   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_framework/aspnetcore-browser-refresh.js - 200 14947 application/javascript;+charset=utf-8 132.4392ms
+INFO  2026-09-09 17:57:42,869 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:42,908 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr/negotiate'
+INFO  2026-09-09 17:57:42,932 [20   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:42,935 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr/negotiate'
+INFO  2026-09-09 17:57:42,938 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 POST https://localhost:52789/signalr/negotiate?negotiateVersion=1 - 200 316 application/json 201.9652ms
+INFO  2026-09-09 17:57:42,966 [19   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 CONNECT https://localhost:52789/signalr?id=aYI_Hf9aPdW82ppeNv1Wvg - - -
+INFO  2026-09-09 17:57:42,970 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr'
+INFO  2026-09-09 17:57:42,989 [24   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpServiceProxies", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ContentResult GetAll(Abp.AspNetCore.Mvc.Proxying.ApiProxyGenerationModel) on controller Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController (Abp.AspNetCore).
+INFO  2026-09-09 17:57:43,013 [20   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "GetScripts", controller = "AbpScripts", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetScripts(System.String, Boolean) on controller Abp.AspNetCore.Mvc.Controllers.AbpScriptsController (Abp.AspNetCore).
+INFO  2026-09-09 17:57:43,038 [8    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 317.7723ms
+DEBUG 2026-09-09 17:57:43,040 [19   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is connected: {"ConnectionId":"bmPmfgGEhFcLE6AtdPBlGQ","IpAddress":"::1","TenantId":1,"UserId":2,"ConnectTime":"2026-09-09T17:57:43.0394483+07:00","Properties":{}}
+INFO  2026-09-09 17:57:43,072 [24   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript
+DEBUG 2026-09-09 17:57:43,074 [19   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is registered: bmPmfgGEhFcLE6AtdPBlGQ
+INFO  2026-09-09 17:57:43,104 [21   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore) in 84.6396ms
+INFO  2026-09-09 17:57:43,106 [21   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Proxying.AbpServiceProxiesController.GetAll (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:43,137 [21   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpServiceProxies/GetAll?v=639245734055123005 - 200 12510 application/x-javascript 413.3774ms
+INFO  2026-09-09 17:57:43,147 [20   ] Mvc.Infrastructure.ContentResultExecutor - Executing ContentResult with HTTP Response ContentType of application/x-javascript; charset=utf-8
+INFO  2026-09-09 17:57:43,150 [24   ] c.Infrastructure.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore) in 134.8796ms
+INFO  2026-09-09 17:57:43,153 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpScriptsController.GetScripts (Abp.AspNetCore)'
+INFO  2026-09-09 17:57:43,156 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/AbpScripts/GetScripts?v=639245734055123005 - 200 17760 application/x-javascript;+charset=utf-8 458.1428ms
+INFO  2026-09-09 17:57:43,175 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:52789/api/services/app/Customer/GetAll?keyword=&sorting=&skipCount=0&maxResultCount=10 - application/json -
+INFO  2026-09-09 17:57:43,181 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'ParkingSystem.Customers.CustomerAppService.GetAllAsync (ParkingSystem.Application)'
+INFO  2026-09-09 17:57:43,190 [24   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetAll", controller = "Customer"}. Executing controller action with signature System.Threading.Tasks.Task`1[Abp.Application.Services.Dto.PagedResultDto`1[ParkingSystem.Customers.Dto.CustomerDto]] GetAllAsync(ParkingSystem.Customers.Dto.PagedCustomerResultRequestDto) on controller ParkingSystem.Customers.CustomerAppService (ParkingSystem.Application).
+INFO  2026-09-09 17:57:43,250 [24   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2026-09-09 17:57:43,252 [24   ] c.Infrastructure.ControllerActionInvoker - Executed action ParkingSystem.Customers.CustomerAppService.GetAllAsync (ParkingSystem.Application) in 60.0148ms
+INFO  2026-09-09 17:57:43,255 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'ParkingSystem.Customers.CustomerAppService.GetAllAsync (ParkingSystem.Application)'
+INFO  2026-09-09 17:57:43,258 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:52789/api/services/app/Customer/GetAll?keyword=&sorting=&skipCount=0&maxResultCount=10 - 200 - application/json;+charset=utf-8 83.3786ms
+DEBUG 2026-09-09 17:58:31,551 [24   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is disconnected: bmPmfgGEhFcLE6AtdPBlGQ
+INFO  2026-09-09 17:58:31,554 [24   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr'
+INFO  2026-09-09 17:58:31,558 [24   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 CONNECT https://localhost:52789/signalr?id=aYI_Hf9aPdW82ppeNv1Wvg - 200 - - 48614.5100ms
