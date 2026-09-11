@@ -28,6 +28,7 @@ public class Quotation : Entity<long>, IHasCreationTime, IHasModificationTime
     public decimal Price { get; set; }
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
+    public bool IsDeleted { get; set; }
 
     public Quotation()
     {

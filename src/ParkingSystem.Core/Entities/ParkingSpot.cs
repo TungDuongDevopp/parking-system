@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParkingSystem.Entities;
 
-public class ParkingSpot : Entity<long>, IHasCreationTime, IHasModificationTime
+public class ParkingSpot : Entity<long>, IHasCreationTime, IHasModificationTime, ISoftDelete
 {
 
     [Required]
@@ -27,5 +27,7 @@ public class ParkingSpot : Entity<long>, IHasCreationTime, IHasModificationTime
     {
         CreationTime = Clock.Now;
         IsFree = true;
+        IsDeleted = false;
     }
+    public bool IsDeleted { get; set; }
 }

@@ -4,6 +4,9 @@ using ParkingSystem.Authorization.Users;
 using ParkingSystem.MultiTenancy;
 using ParkingSystem.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Linq;
 
 namespace ParkingSystem.EntityFrameworkCore;
 
@@ -133,6 +136,18 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
             .HasForeignKey(ps => ps.QuotationId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+        // Apply global query filter for entities implementing ISoftDelete
+        var softDeleteInterface = typeof(Abp.Domain.Entities.ISoftDelete);
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(t => softDeleteInterface.IsAssignableFrom(t.ClrType)))
+        {
+            var clrType = entityType.ClrType;
+            var parameter = Expression.Parameter(clrType, "e");
+            var efPropertyMethod = typeof(EF).GetMethod(nameof(EF.Property), BindingFlags.Public | BindingFlags.Static)?.MakeGenericMethod(typeof(bool));
+            var isDeletedProperty = Expression.Call(efPropertyMethod!, parameter, Expression.Constant("IsDeleted"));
+            var condition = Expression.Equal(isDeletedProperty, Expression.Constant(false));
+            var lambda = Expression.Lambda(condition, parameter);
+            modelBuilder.Entity(clrType).HasQueryFilter(lambda);
+        }
 
     }
 }

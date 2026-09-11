@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParkingSystem.Entities;
 
-public class ParkingArea : Entity<long>, IHasCreationTime, IHasModificationTime
+public class ParkingArea : Entity<long>, IHasCreationTime, IHasModificationTime, ISoftDelete
 {
     [Required]
     [StringLength(30)]
@@ -32,9 +32,11 @@ public class ParkingArea : Entity<long>, IHasCreationTime, IHasModificationTime
     public DateTime? LastModificationTime { get; set; }
 
     public ICollection<ParkingSpot> ParkingSpots = new List<ParkingSpot>();
+    public bool IsDeleted { get; set; }
 
     public ParkingArea()
     {
         CreationTime = Clock.Now;
+        IsDeleted = false;
     }
 }

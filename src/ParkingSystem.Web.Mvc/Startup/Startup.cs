@@ -1,22 +1,26 @@
 using Abp.AspNetCore;
 using Abp.AspNetCore.Mvc.Antiforgery;
+using Abp.AspNetCore.Mvc.ExceptionHandling;
 using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Castle.Logging.Log4Net;
-using ParkingSystem.Authentication.JwtBearer;
-using ParkingSystem.Configuration;
-using ParkingSystem.Identity;
-using ParkingSystem.Web.Resources;
 using Castle.Facilities.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.WebEncoders;
 using Microsoft.OpenApi.Models;
+using ParkingSystem.Authentication.JwtBearer;
+using ParkingSystem.Configuration;
+using ParkingSystem.Identity;
+using ParkingSystem.Web.ExceptionHandling;
+using ParkingSystem.Web.Resources;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -51,6 +55,21 @@ public class Startup
                     options.Filters.Add(new AbpAutoValidateAntiforgeryTokenAttribute());
                 }
             );
+
+        services.PostConfigure<MvcOptions>(options =>
+        {
+            var abpFilter = options.Filters.FirstOrDefault(x =>
+                x is ServiceFilterAttribute sf && sf.ServiceType == typeof(AbpExceptionFilter));
+
+            if (abpFilter != null)
+            {
+                var index = options.Filters.IndexOf(abpFilter);
+                options.Filters.RemoveAt(index);
+                options.Filters.Insert(index, new ServiceFilterAttribute(typeof(ParkingSystemExceptionFilter)));
+            }
+        });
+
+        services.AddTransient<ParkingSystemExceptionFilter>();
 
         IdentityRegistrar.Register(services);
         AuthConfigurer.Configure(services, _appConfiguration);

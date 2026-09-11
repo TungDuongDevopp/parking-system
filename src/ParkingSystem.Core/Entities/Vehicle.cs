@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ParkingSystem.Entities;
 
 [Table("Vehicles")]
-public class Vehicle : Entity<long>, IHasCreationTime, IHasModificationTime
+public class Vehicle : Entity<long>, IHasCreationTime, IHasModificationTime, ISoftDelete
 
 {
     [Required]
@@ -38,10 +38,12 @@ public class Vehicle : Entity<long>, IHasCreationTime, IHasModificationTime
     public Customer Customer { get; set; }
     public DateTime CreationTime { get ; set; }
     public DateTime? LastModificationTime { get ; set; }
+    public bool IsDeleted { get; set; }
 
     public Vehicle()
     {
         CreationTime = Clock.Now;
+        IsDeleted = false;
     }
     public ICollection<ParkingSession> ParkingSessions { get; set; } = new List<ParkingSession>();
 }

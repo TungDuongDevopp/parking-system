@@ -1,4 +1,4 @@
-﻿using Abp.Authorization;
+using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
@@ -18,21 +18,19 @@ using System.Threading.Tasks;
 namespace ParkingSystem.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [IgnoreAntiforgeryToken]
     public class TokenAuthController : ParkingSystemControllerBase
     {
         private readonly LogInManager _logInManager;
-        private readonly ITenantCache _tenantCache;
         private readonly AbpLoginResultTypeHelper _abpLoginResultTypeHelper;
         private readonly TokenAuthConfiguration _configuration;
 
         public TokenAuthController(
             LogInManager logInManager,
-            ITenantCache tenantCache,
             AbpLoginResultTypeHelper abpLoginResultTypeHelper,
             TokenAuthConfiguration configuration)
         {
             _logInManager = logInManager;
-            _tenantCache = tenantCache;
             _abpLoginResultTypeHelper = abpLoginResultTypeHelper;
             _configuration = configuration;
         }
@@ -43,7 +41,7 @@ namespace ParkingSystem.Controllers
             var loginResult = await GetLoginResultAsync(
                 model.UserNameOrEmailAddress,
                 model.Password,
-                GetTenancyNameOrNull()
+                null
             );
 
             var accessToken = CreateAccessToken(CreateJwtClaims(loginResult.Identity));
@@ -57,15 +55,7 @@ namespace ParkingSystem.Controllers
             };
         }
 
-        private string GetTenancyNameOrNull()
-        {
-            if (!AbpSession.TenantId.HasValue)
-            {
-                return null;
-            }
-
-            return _tenantCache.GetOrNull(AbpSession.TenantId.Value)?.TenancyName;
-        }
+        // Tenancy name is intentionally not used in authentication when multi-tenancy is disabled.
 
         private async Task<AbpLoginResult<Tenant, User>> GetLoginResultAsync(string usernameOrEmailAddress, string password, string tenancyName)
         {

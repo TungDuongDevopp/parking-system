@@ -1,4 +1,4 @@
-﻿using Abp.AspNetCore;
+using Abp.AspNetCore;
 using Abp.AspNetCore.Configuration;
 using Abp.AspNetCore.SignalR;
 using Abp.Modules;
@@ -13,6 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Abp.AspNetCore.Mvc.ExceptionHandling;
+using Abp.Configuration.Startup;
+using Abp.Dependency;
+using ParkingSystem.Web.ExceptionHandling;
 
 namespace ParkingSystem
 {
@@ -46,6 +50,8 @@ namespace ParkingSystem
                  .CreateControllersForAppServices(
                      typeof(ParkingSystemApplicationModule).GetAssembly()
                  );
+
+            Configuration.ReplaceService<AbpExceptionFilter, ParkingSystemExceptionFilter>(DependencyLifeStyle.Transient);
 
             ConfigureTokenAuth();
         }

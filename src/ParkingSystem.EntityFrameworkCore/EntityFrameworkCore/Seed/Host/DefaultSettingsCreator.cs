@@ -18,12 +18,9 @@ public class DefaultSettingsCreator
 
     public void Create()
     {
-        int? tenantId = null;
-
-        if (ParkingSystemConsts.MultiTenancyEnabled == false)
-        {
-            tenantId = MultiTenancyConsts.DefaultTenantId;
-        }
+        // Ensure settings are available for the technical default tenant in single-tenant mode.
+        var defaultTenant = _context.Tenants.IgnoreQueryFilters().FirstOrDefault(t => t.TenancyName == Abp.MultiTenancy.AbpTenantBase.DefaultTenantName);
+        int? tenantId = defaultTenant?.Id;
 
         // Emailing
         AddSettingIfNotExists(EmailSettingNames.DefaultFromAddress, "admin@mydomain.com", tenantId);

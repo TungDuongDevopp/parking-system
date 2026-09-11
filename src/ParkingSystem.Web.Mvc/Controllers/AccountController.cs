@@ -43,7 +43,7 @@ public class AccountController : ParkingSystemControllerBase
     private readonly SignInManager _signInManager;
     private readonly UserRegistrationManager _userRegistrationManager;
     private readonly ISessionAppService _sessionAppService;
-    private readonly ITenantCache _tenantCache;
+
     private readonly INotificationPublisher _notificationPublisher;
 
     public AccountController(
@@ -56,7 +56,6 @@ public class AccountController : ParkingSystemControllerBase
         SignInManager signInManager,
         UserRegistrationManager userRegistrationManager,
         ISessionAppService sessionAppService,
-        ITenantCache tenantCache,
         INotificationPublisher notificationPublisher)
     {
         _userManager = userManager;
@@ -68,7 +67,6 @@ public class AccountController : ParkingSystemControllerBase
         _signInManager = signInManager;
         _userRegistrationManager = userRegistrationManager;
         _sessionAppService = sessionAppService;
-        _tenantCache = tenantCache;
         _notificationPublisher = notificationPublisher;
     }
 
@@ -102,7 +100,7 @@ public class AccountController : ParkingSystemControllerBase
 
         try
         {
-            var loginResult = await GetLoginResultAsync(loginModel.UsernameOrEmailAddress, loginModel.Password, GetTenancyNameOrNull());
+            var loginResult = await GetLoginResultAsync(loginModel.UsernameOrEmailAddress, loginModel.Password, null);
 
             await _signInManager.SignInAsync(loginResult.Identity, loginModel.RememberMe);
             await UnitOfWorkManager.Current.SaveChangesAsync();
@@ -240,7 +238,7 @@ public class AccountController : ParkingSystemControllerBase
                 AbpLoginResult<Tenant, User> loginResult;
                 if (externalLoginInfo != null)
                 {
-                    loginResult = await _logInManager.LoginAsync(externalLoginInfo, tenant.TenancyName);
+                    loginResult = await _logInManager.LoginAsync(externalLoginInfo, null);
                 }
                 else
                 {
@@ -322,9 +320,7 @@ public class AccountController : ParkingSystemControllerBase
 
         await _signInManager.SignOutAsync();
 
-        var tenancyName = GetTenancyNameOrNull();
-
-        var loginResult = await _logInManager.LoginAsync(externalLoginInfo, tenancyName);
+        var loginResult = await _logInManager.LoginAsync(externalLoginInfo, null);
 
         switch (loginResult.Result)
         {
@@ -337,7 +333,7 @@ public class AccountController : ParkingSystemControllerBase
                 throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(
                     loginResult.Result,
                     externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email) ?? externalLoginInfo.ProviderKey,
-                    tenancyName
+                    null
                 );
         }
     }
@@ -422,15 +418,7 @@ public class AccountController : ParkingSystemControllerBase
 
     #region Common
 
-    private string GetTenancyNameOrNull()
-    {
-        if (!AbpSession.TenantId.HasValue)
-        {
-            return null;
-        }
-
-        return _tenantCache.GetOrNull(AbpSession.TenantId.Value)?.TenancyName;
-    }
+    // Tenancy name is intentionally not used in authentication when multi-tenancy is disabled.
 
     private string NormalizeReturnUrl(string returnUrl, Func<string> defaultValueBuilder = null)
     {

@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ParkingSystem.Entities
 {
     [Table("Customers")]
-    public class Customer : Entity<long>, IHasCreationTime, IHasModificationTime
+    public class Customer : Entity<long>, IHasCreationTime, IHasModificationTime, ISoftDelete
 
     {
         [Required]
@@ -28,6 +28,7 @@ namespace ParkingSystem.Entities
         public Customer()
         {
             CreationTime = Clock.Now;
+            IsDeleted = false;
         }
 
         public long UserId { get; set; }
@@ -36,5 +37,6 @@ namespace ParkingSystem.Entities
 
         public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
         public DateTime? LastModificationTime { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
