@@ -14,5 +14,6 @@ namespace ParkingSystem.Customers.Dto
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public DateTime CreationTime { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
