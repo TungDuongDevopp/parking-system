@@ -6,10 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ParkingSystem.Vehicles.Dto;
 public class CreateVehicleDto
 {
-    [Required]
-    [StringLength(30)]
-    public string VehicleCode { get; set; }
-
+  
     [Required]
     public VehicleType VehicleType { get; set; }
 
