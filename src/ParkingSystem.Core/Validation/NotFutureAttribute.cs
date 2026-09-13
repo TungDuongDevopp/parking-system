@@ -15,7 +15,7 @@ namespace ParkingSystem.Validation
                 return true;
 
             return value is DateTime dateTimeValue
-                && dateTimeValue >= DateTime.Now;
+                && dateTimeValue <= DateTime.Now;
         }
     }
 }
