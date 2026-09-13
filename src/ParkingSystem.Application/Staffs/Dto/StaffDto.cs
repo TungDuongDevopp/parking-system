@@ -20,21 +20,16 @@ public class StaffDto : EntityDto<long>
 
     public string Address {  get; set; }
 
-    public bool IsMale { private get; set; }
+    public bool Gender { get; set; }
 
-    public string Gender
-    {
-        get
-        {
-            return IsMale ? "Nam" : "Nữ";
-        }
-    }
+    public string GenderName => Gender ? "Nam" : "Nữ";
 
     public DateTime HiredDate { get; set; }
 
     public DateTime DateOfBirth { get; set; }
 
     public StaffStatus StaffStatus { get; set; }
+    public string StaffStatusName => StaffStatus.ToString();
     public DateTime CreationTime { get; set; }
     public bool IsDeleted { get; set; }
 }

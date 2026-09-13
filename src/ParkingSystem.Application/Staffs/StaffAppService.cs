@@ -85,7 +85,7 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
 
         if (!roles.Contains("Staff"))
         {
-            throw new AbpException("User does not have Staff role.");
+            throw new UserNotInRoleException("User does not have Staff role.");
         }
 
         // 3. Một user chỉ được có một Staff profile
