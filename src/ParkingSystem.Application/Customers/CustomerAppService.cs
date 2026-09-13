@@ -56,7 +56,7 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
             var existUser = await _userRepository.GetAll().AnyAsync(u => u.Id == userId);
             if (!existUser)
             {
-                throw new Abp.AbpException("Current user does not exist.");
+                throw new ResourceNotFoundException("Current user does not exist.");
             }
 
             entity.UserId = userId;
