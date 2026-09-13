@@ -10,8 +10,10 @@ using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Authorization;
 using ParkingSystem.Entities;
+using ParkingSystem.Entities.Enums;
 using ParkingSystem.Exceptions;
 using ParkingSystem.Vehicles.Dto;
+using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
@@ -26,6 +28,28 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
     {
         _customerRepository = customerRepository;
 
+    }
+    private string GetVehiclePrefix(VehicleType type)
+    {
+        return type switch
+        {
+            VehicleType.Bicycle => "BC",
+            VehicleType.ElectricBicycle => "EB",
+            VehicleType.Motorcycle => "MC",
+            VehicleType.ElectricMotorcycle => "EM",
+            VehicleType.Car => "C",
+            _ => throw new ArgumentOutOfRangeException(nameof(type))
+        };
+    }
+    private async Task<string> GenerateVehicleCodeAsync(VehicleType type)
+    {
+        var prefix = GetVehiclePrefix(type);
+
+        var count = await Repository.CountAsync(
+            x => x.VehicleType == type
+        );
+
+        return $"{prefix}{count + 1:D6}";
     }
 
     protected override IQueryable<Vehicle> CreateFilteredQuery(PagedVehicleResultRequestDto input)
@@ -68,8 +92,9 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
 
         var entity = ObjectMapper.Map<Vehicle>(input);
         entity.CustomerId = customer.Id;
+        entity.VehicleCode = await GenerateVehicleCodeAsync(input.VehicleType);
 
-       var created = await Repository.InsertAsync(entity);
+        var created = await Repository.InsertAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
 
         return MapToEntityDto(created);

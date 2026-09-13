@@ -24,4 +24,6 @@ public class VehicleDto : EntityDto<long>
     public string Color { get; set; }
     public DateTime CreationTime { get; set; }
     public bool IsDeleted { get; set; }
+
+    public long CustomerId { get; set;}
 }

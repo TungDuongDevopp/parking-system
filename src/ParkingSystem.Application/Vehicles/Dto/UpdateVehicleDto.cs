@@ -12,9 +12,6 @@ namespace ParkingSystem.Vehicles.Dto;
 public class UpdateVehicleDto: EntityDto<long>
 {
 
-    [StringLength(30)]
-    public string VehicleCode { get; set; }
-
     public VehicleType VehicleType { get; set; }
 
     [StringLength(30)]
