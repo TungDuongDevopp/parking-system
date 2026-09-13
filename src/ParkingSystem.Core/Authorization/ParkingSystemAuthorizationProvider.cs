@@ -18,6 +18,7 @@ public class ParkingSystemAuthorizationProvider : AuthorizationProvider
         context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
         context.CreatePermission(PermissionNames.Pages_Customers, L("Customers"));
         context.CreatePermission(PermissionNames.Pages_Staffs, L("Staffs"));
+        context.CreatePermission(PermissionNames.Pages_Vehicles, L("Vehicles"));
 
     }
 

@@ -17,4 +17,6 @@ public static class PermissionNames
 
     public const string Pages_Staffs = "Pages.Staffs";
 
+    public const string Pages_Vehicles = "Pages.Vehicles";
+
 }
