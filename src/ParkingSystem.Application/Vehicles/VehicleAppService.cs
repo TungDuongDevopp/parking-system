@@ -94,7 +94,7 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
 
     protected override IQueryable<Vehicle> CreateFilteredQuery(PagedVehicleResultRequestDto input)
     {
-        var query = Repository.GetAll();
+        var query = Repository.GetAll().AsNoTracking();
 
     
         var canViewAll = PermissionChecker.IsGranted(PermissionNames.Pages_Vehicles_ViewAll);
@@ -145,6 +145,14 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
             throw new ResourceNotFoundException(
      "Customer profile not found for current user."
  );
+        var duplicated = await Repository.GetAll()
+            .IgnoreQueryFilters()
+        .AnyAsync(v => v.LicensePlate == input.LicensePlate);
+
+        if (duplicated)
+        {
+            throw new DuplicateResourceException("License plate already exists.");
+        }
 
         var entity = ObjectMapper.Map<Vehicle>(input);
         entity.CustomerId = customer.Id;
@@ -157,10 +165,7 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
     }
     public override async Task<VehicleDto> GetAsync(EntityDto<long> input)
     {
-        var vehicle = await Repository
-            .GetAll()
-            .Include(x => x.Customer)
-            .FirstOrDefaultAsync(x => x.Id == input.Id);
+        var vehicle = await Repository.FirstOrDefaultAsync(input.Id);
 
         if (vehicle == null)
         {
@@ -173,17 +178,23 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
     }
     public override async Task<VehicleDto> UpdateAsync(UpdateVehicleDto input)
     {
-        var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
-       
+        var entity = await Repository.FirstOrDefaultAsync(input.Id);
+
 
         if (entity == null)
         {
             throw new ResourceNotFoundException("Vehicle not found with id: " + input.Id);
         }
         
-        if (entity.IsDeleted)
+        var duplicated = await Repository.GetAll()
+            .IgnoreQueryFilters()
+        .AnyAsync(v =>
+        v.Id != input.Id &&
+        v.LicensePlate == input.LicensePlate);
+
+        if (duplicated)
         {
-            throw new CannotManipulateException("Vehicle cannot be manipulated in its current status");
+            throw new DuplicateResourceException("License plate already exists.");
         }
         await CheckVehicleAccessAsync(entity);
         ObjectMapper.Map(input, entity);
@@ -194,21 +205,17 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
     }
     public override async Task DeleteAsync(EntityDto<long> input)
     {
-        // Load entity including soft-deleted ones so we can return proper errors
-        var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
+        var entity = await Repository.FirstOrDefaultAsync(input.Id);
         if (entity == null)
         {
             throw new ResourceNotFoundException("Vehicle not found with id: " + input.Id);
         }
 
-        if (entity.IsDeleted)
-        {
-            throw new CannotManipulateException("Vehicle cannot be manipulated in its current status");
-        }
         await CheckVehicleAccessAsync(entity);
         await Repository.DeleteAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
 
     }
+    
 
 }

@@ -31,7 +31,7 @@ public class ParkingArea : Entity<long>, IHasCreationTime, IHasModificationTime,
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
 
-    public ICollection<ParkingSpot> ParkingSpots = new List<ParkingSpot>();
+    public ICollection<ParkingSpot> ParkingSpots { get; set; } = new List<ParkingSpot>();
     public bool IsDeleted { get; set; }
 
     public ParkingArea()

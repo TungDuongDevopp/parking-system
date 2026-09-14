@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingSystem.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using ParkingSystem.EntityFrameworkCore;
 namespace ParkingSystem.Migrations
 {
     [DbContext(typeof(ParkingSystemDbContext))]
-    partial class ParkingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260914081121_LicensePlate Unique")]
+    partial class LicensePlateUnique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1703,7 +1706,6 @@ namespace ParkingSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Fee")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsPaid")
@@ -1791,7 +1793,6 @@ namespace ParkingSystem.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<decimal>("ExpectedAmount")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("ExpiresAt")
@@ -1800,7 +1801,7 @@ namespace ParkingSystem.Migrations
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("PaidAt")
+                    b.Property<DateTime>("PaidAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PaymentMethod")
@@ -1810,7 +1811,6 @@ namespace ParkingSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("ReceivedAmount")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("SubscriptionId")
@@ -1832,7 +1832,6 @@ namespace ParkingSystem.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreationTime")
@@ -1892,7 +1891,6 @@ namespace ParkingSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("VehicleType")

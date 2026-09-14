@@ -14,5 +14,6 @@ public class StaffMapProfile : Profile
         CreateMap<UpdateStaffDto, Staff>()
     .ForAllMembers(opt =>
         opt.Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<ChangeStatusDto, Staff>();
     }
 }

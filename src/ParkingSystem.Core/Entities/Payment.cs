@@ -27,7 +27,6 @@ namespace ParkingSystem.Entities
         public DateTime CreationTime { get; set; }
         public DateTime? LastModificationTime { get; set; }
 
-        [Required]
         public DateTime? PaidAt { get; set; }
 
         [StringLength(500)]

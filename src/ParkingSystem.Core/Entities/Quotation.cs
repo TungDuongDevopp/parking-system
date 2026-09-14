@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ParkingSystem.Entities;
 
 [Table("Quotations")]
-public class Quotation : Entity<long>, IHasCreationTime, IHasModificationTime
+public class Quotation : Entity<long>, IHasCreationTime, IHasModificationTime,ISoftDelete
 
 
 {

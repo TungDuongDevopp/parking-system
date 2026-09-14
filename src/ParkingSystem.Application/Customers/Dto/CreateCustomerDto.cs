@@ -1,13 +1,8 @@
 
-
-using Abp.Application.Services.Dto;
-using Abp.AutoMapper;
-using ParkingSystem.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace ParkingSystem.Customers.Dto
 {
-    [AutoMapTo(typeof(Customer))]
     public class CreateCustomerDto
     {
         [Required]
@@ -19,7 +14,7 @@ namespace ParkingSystem.Customers.Dto
         [Phone]
         public string PhoneNumber { get; set; }
 
-        [StringLength(100)]
+        [StringLength(255)]
         [EmailAddress]
         public string? Email { get; set; }
     }
