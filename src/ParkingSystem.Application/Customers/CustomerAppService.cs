@@ -9,10 +9,10 @@ using ParkingSystem.Authorization;
 using ParkingSystem.Authorization.Users;
 using ParkingSystem.Customers.Dto;
 using ParkingSystem.Entities;
+using ParkingSystem.Exceptions;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using ParkingSystem.Exceptions;
 
 
 namespace ParkingSystem.Customers;
@@ -20,19 +20,90 @@ namespace ParkingSystem.Customers;
 [AbpAuthorize(PermissionNames.Pages_Customers)]
 public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, long, PagedCustomerResultRequestDto, CreateCustomerDto, UpdateCustomerDto>, ICustomerAppService
 {
-    private readonly IRepository<User, long> _userRepository;
+  
 
-    public CustomerAppService(IRepository<Customer, long> repository, IRepository<User, long> userRepository) : base(repository)
+    public CustomerAppService(IRepository<Customer, long> repository) : base(repository)
     {
-        _userRepository = userRepository;
+     
     }
-    protected override IQueryable<Customer> CreateFilteredQuery(PagedCustomerResultRequestDto input)
+    private async Task CheckCustomerModifyAccessAsync(Customer customer)
     {
-        return Repository.GetAll()
-            .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x =>
+        if (await PermissionChecker.IsGrantedAsync(
+            PermissionNames.Pages_Customers_ModifyAll))
+        {
+            return;
+        }
+
+        var userId = AbpSession.UserId
+            ?? throw new AbpAuthorizationException("User is not logged in.");
+
+        if (customer.UserId != userId)
+        {
+            throw new AbpAuthorizationException(
+                "You can only modify your own customer profile."
+            );
+        }
+    }
+
+    private async Task CheckCustomerViewAccessAsync(Customer customer)
+    {
+        var canViewAll = await PermissionChecker.IsGrantedAsync(
+            PermissionNames.Pages_Customers_ViewAll
+        );
+
+        if (canViewAll)
+            return;
+
+        var userId = AbpSession.UserId
+            ?? throw new AbpAuthorizationException("User is not logged in.");
+
+        if (customer.UserId != userId)
+        {
+            throw new AbpAuthorizationException(
+                "You do not have permission to view this customer."
+            );
+        }
+    }
+
+    protected override IQueryable<Customer> CreateFilteredQuery(
+    PagedCustomerResultRequestDto input)
+    {
+        var query = Repository.GetAll();
+
+        var canViewAll = PermissionChecker.IsGranted(
+            PermissionNames.Pages_Customers_ViewAll
+        );
+
+        if (!canViewAll)
+        {
+            var userId = AbpSession.UserId
+                ?? throw new AbpAuthorizationException(
+                    "User is not logged in."
+                );
+
+            query = query.Where(x => x.UserId == userId);
+        }
+
+        return query.WhereIf(
+            !input.Keyword.IsNullOrWhiteSpace(),
+            x =>
                 x.Name.Contains(input.Keyword) ||
                 x.PhoneNumber.Contains(input.Keyword) ||
-                x.Email.Contains(input.Keyword));
+                (x.Email != null && x.Email.Contains(input.Keyword))
+        );
+    }
+    public override async Task<CustomerDto> GetAsync(EntityDto<long> input)
+    {
+        var customer = await Repository.FirstOrDefaultAsync(x => x.Id == input.Id);
+
+        if (customer == null)
+        {
+            throw new ResourceNotFoundException("Customer not found with id: " + input.Id);
+        }
+
+        await CheckCustomerViewAccessAsync(customer);
+
+        return ObjectMapper.Map<CustomerDto>(customer);
     }
     protected override IQueryable<Customer> ApplySorting(IQueryable<Customer> query, PagedCustomerResultRequestDto input)
     {
@@ -45,36 +116,43 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
 
     public override async Task<CustomerDto> CreateAsync(CreateCustomerDto input)
     {
-        // Map input to entity
-        var entity = ObjectMapper.Map<Customer>(input);
+        var userId = AbpSession.UserId
+            ?? throw new AbpAuthorizationException("User is not logged in.");
 
-        // Assign current user id on server side (do not trust client)
-        if (AbpSession.UserId.HasValue)
+        var existingCustomer = await Repository
+     .GetAll()
+     .IgnoreQueryFilters()
+     .FirstOrDefaultAsync(x => x.UserId == userId);
+
+        if (existingCustomer != null)
         {
-            var userId = AbpSession.UserId.Value;
-            // Ensure the user exists before assigning
-            var existUser = await _userRepository.GetAll().AnyAsync(u => u.Id == userId);
-            if (!existUser)
-            {
-                throw new ResourceNotFoundException("Current user does not exist.");
-            }
-
-            entity.UserId = userId;
+            throw new DuplicateResourceException(
+                "Current user already has a customer profile."
+            );
         }
 
-        // Prevent creating when a customer with same phone or email already exists (including soft-deleted)
-        var existCustomer = await Repository.GetAll().IgnoreQueryFilters().AnyAsync(x => x.PhoneNumber == input.PhoneNumber || (input.Email != null && x.Email == input.Email));
+        var existCustomer = await Repository
+            .GetAll()
+            .IgnoreQueryFilters()
+            .AnyAsync(x =>
+                x.PhoneNumber == input.PhoneNumber ||
+                (input.Email != null && x.Email == input.Email));
+
         if (existCustomer)
         {
-            throw new DuplicateResourceException("A customer with the same phone number or email already exists.");
+            throw new DuplicateResourceException(
+                "A customer with the same phone number or email already exists."
+            );
         }
+
+        var entity = ObjectMapper.Map<Customer>(input);
+        entity.UserId = userId;
 
         var created = await Repository.InsertAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
 
         return MapToEntityDto(created);
     }
-
     public override async Task<CustomerDto> UpdateAsync(UpdateCustomerDto input)
     {
         // Load entity including soft-deleted ones to detect deleted state
@@ -87,9 +165,10 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
         {
             throw new CannotManipulateException("Customer cannot be manipulated in its current status");
         }
+        await CheckCustomerModifyAccessAsync(entity);
 
-        // Ensure we preserve UserId and only update allowed fields
-        var originalUserId = entity.UserId;
+         // Ensure we preserve UserId and only update allowed fields
+         var originalUserId = entity.UserId;
 
         // Map incoming fields onto existing entity
         ObjectMapper.Map(input, entity);
@@ -115,6 +194,7 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
         {
             throw new CannotManipulateException("Customer cannot be manipulated in its current status");
         }
+        await CheckCustomerModifyAccessAsync(entity);
 
         await Repository.DeleteAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();

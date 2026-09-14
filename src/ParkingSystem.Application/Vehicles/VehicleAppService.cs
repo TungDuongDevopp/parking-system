@@ -85,15 +85,11 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
             );
         }
     }
-    private async Task<string> GenerateVehicleCodeAsync(VehicleType type)
+    private string GenerateVehicleCode(VehicleType type)
     {
         var prefix = GetVehiclePrefix(type);
-
-        var count = await Repository.CountAsync(
-            x => x.VehicleType == type
-        );
-
-        return $"{prefix}{count + 1:D6}";
+        var id = Guid.NewGuid().ToString("N")[..16].ToUpper();
+        return $"{prefix}{id}";
     }
 
     protected override IQueryable<Vehicle> CreateFilteredQuery(PagedVehicleResultRequestDto input)
@@ -152,7 +148,7 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
 
         var entity = ObjectMapper.Map<Vehicle>(input);
         entity.CustomerId = customer.Id;
-        entity.VehicleCode = await GenerateVehicleCodeAsync(input.VehicleType);
+        entity.VehicleCode = GenerateVehicleCode(input.VehicleType);
 
         var created = await Repository.InsertAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();

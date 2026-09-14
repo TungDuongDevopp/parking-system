@@ -18,6 +18,9 @@ public static class PermissionNames
 
     public const string Pages_Customers_ViewAll = "Pages.Customers.ViewAll";
 
+    public const string Pages_Customers_ModifyAll = "Pages.Customers.ModifyAll";
+
+
     //Staff
     public const string Pages_Staffs = "Pages.Staffs";
 
