@@ -3,6 +3,7 @@
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
@@ -41,6 +42,49 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
             _ => throw new ArgumentOutOfRangeException(nameof(type))
         };
     }
+    private async Task CheckVehicleAccessAsync(Vehicle vehicle)
+    {
+        var canModifyAll = await PermissionChecker.IsGrantedAsync(
+            PermissionNames.Pages_Vehicles_ModifyAll
+);
+
+        if (canModifyAll)
+        {
+            return;
+        }
+
+        var userId = AbpSession.UserId
+            ?? throw new AbpAuthorizationException("User is not logged in.");
+
+        var customer = await _customerRepository
+            .FirstOrDefaultAsync(x => x.Id == vehicle.CustomerId);
+
+        if (customer == null || customer.UserId != userId)
+        {
+            throw new AbpAuthorizationException(
+                "You do not have permission to access this vehicle."
+            );
+        }
+    }
+    private async Task CheckVehicleViewAccessAsync(Vehicle vehicle)
+    {
+        var canViewAll = await PermissionChecker.IsGrantedAsync(
+            PermissionNames.Pages_Vehicles_ViewAll
+        );
+
+        if (canViewAll)
+            return;
+
+        var userId = AbpSession.UserId
+            ?? throw new AbpAuthorizationException("User is not logged in.");
+
+        if (vehicle.Customer.UserId != userId)
+        {
+            throw new AbpAuthorizationException(
+                "You do not have permission to view this vehicle."
+            );
+        }
+    }
     private async Task<string> GenerateVehicleCodeAsync(VehicleType type)
     {
         var prefix = GetVehiclePrefix(type);
@@ -54,22 +98,33 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
 
     protected override IQueryable<Vehicle> CreateFilteredQuery(PagedVehicleResultRequestDto input)
     {
-        return Repository.GetAll()
+        var query = Repository.GetAll();
+
+    
+        var canViewAll = PermissionChecker.IsGranted(PermissionNames.Pages_Vehicles_ViewAll);
+        if (!canViewAll)
+        {
+            var userId = AbpSession.UserId ?? throw new AbpAuthorizationException("User is not logged in."); ;
+            query = query.Where(x => x.Customer.UserId == userId);
+        }
+        else
+        {
+            query = query.WhereIf(
+            input.CustomerId.HasValue,
+            x => x.CustomerId == input.CustomerId);
+        }
+        return query
             .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x =>
                 x.Brand.Contains(input.Keyword) ||
                 x.Color.Contains(input.Keyword) ||
                 x.LicensePlate.Contains(input.Keyword) ||
                 x.VehicleCode.Contains(input.Keyword))
 
-        // Status =
         .WhereIf(input.VehicleType.HasValue,
-            x => x.VehicleType == input.VehicleType.Value)
-        .WhereIf(input.CustomerId.HasValue,
-            x=>x.CustomerId == input.CustomerId
-        )
-        ;
-        
+            x => x.VehicleType == input.VehicleType.Value);      
     }
+    
+
 
     protected override IQueryable<Vehicle> ApplySorting(IQueryable<Vehicle> query, PagedVehicleResultRequestDto input)
     {
@@ -81,14 +136,19 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
     }
 
     public override async Task<VehicleDto> CreateAsync(CreateVehicleDto input)
+
     {
-        var userId = AbpSession.UserId ?? throw new ResourceNotFoundException("User not found");
+
+        var userId = AbpSession.UserId
+     ?? throw new AbpAuthorizationException("User is not logged in.");
 
         var customer = await _customerRepository
             .FirstOrDefaultAsync(x => x.UserId == userId);
 
         if (customer == null)
-            throw new ResourceNotFoundException("Customer not found with id: " + userId);
+            throw new ResourceNotFoundException(
+     "Customer profile not found for current user."
+ );
 
         var entity = ObjectMapper.Map<Vehicle>(input);
         entity.CustomerId = customer.Id;
@@ -99,17 +159,37 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
 
         return MapToEntityDto(created);
     }
+    public override async Task<VehicleDto> GetAsync(EntityDto<long> input)
+    {
+        var vehicle = await Repository
+            .GetAll()
+            .Include(x => x.Customer)
+            .FirstOrDefaultAsync(x => x.Id == input.Id);
+
+        if (vehicle == null)
+        {
+            throw new ResourceNotFoundException("Vehicle not found with id: "+ input.Id);
+        }
+
+        await CheckVehicleViewAccessAsync(vehicle);
+
+        return ObjectMapper.Map<VehicleDto>(vehicle);
+    }
     public override async Task<VehicleDto> UpdateAsync(UpdateVehicleDto input)
     {
         var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
+       
+
         if (entity == null)
         {
             throw new ResourceNotFoundException("Vehicle not found with id: " + input.Id);
         }
+        
         if (entity.IsDeleted)
         {
             throw new CannotManipulateException("Vehicle cannot be manipulated in its current status");
         }
+        await CheckVehicleAccessAsync(entity);
         ObjectMapper.Map(input, entity);
 
         await Repository.UpdateAsync(entity);
@@ -124,11 +204,12 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
         {
             throw new ResourceNotFoundException("Vehicle not found with id: " + input.Id);
         }
+
         if (entity.IsDeleted)
         {
             throw new CannotManipulateException("Vehicle cannot be manipulated in its current status");
         }
-
+        await CheckVehicleAccessAsync(entity);
         await Repository.DeleteAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
 
