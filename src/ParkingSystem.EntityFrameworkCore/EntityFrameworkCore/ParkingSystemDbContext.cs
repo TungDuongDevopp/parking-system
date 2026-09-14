@@ -42,7 +42,9 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
        
         modelBuilder.Entity<Customer>()
             .HasIndex(x => x.UserId)
-            .IsUnique();
+            .IsUnique()
+             .HasFilter("[IsDeleted] = 0"); ;
+            
 
         modelBuilder.Entity<Customer>()
             .HasIndex(x => x.PhoneNumber)
@@ -58,9 +60,11 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
             .HasOne<User>()
             .WithOne()
             .HasForeignKey<Staff>(s => s.UserId);
+
         modelBuilder.Entity<Staff>()
             .HasIndex(x => x.UserId)
-            .IsUnique();
+            .IsUnique()
+            .HasFilter("[IsDeleted] = 0");
 
         modelBuilder.Entity<Staff>()
             .HasIndex(x => x.PhoneNumber)

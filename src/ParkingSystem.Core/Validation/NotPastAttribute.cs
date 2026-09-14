@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParkingSystem.Validation
 {
-    public class NotPassAttribute : ValidationAttribute
+    public class NotPastAttribute : ValidationAttribute
     {
         public override bool IsValid(object value)
         {
