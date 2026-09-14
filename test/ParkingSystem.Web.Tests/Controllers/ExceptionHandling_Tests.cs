@@ -97,7 +97,7 @@ namespace ParkingSystem.Web.Tests.Controllers
         }
 
         [Fact]
-        public async Task Manipulate_SoftDeleted_Customer_Should_Return_409_With_Specific_Message()
+        public async Task Manipulate_SoftDeleted_Customer_Should_Return_404_With_Specific_Message()
         {
             // Arrange
             await AuthenticateAsAdminAsync();
@@ -121,7 +121,7 @@ namespace ParkingSystem.Web.Tests.Controllers
             var response = await Client.DeleteAsync($"/api/services/app/Customer/Delete?Id={deletedCustomerId}");
 
             // Assert
-            response.StatusCode.ShouldBe(HttpStatusCode.Conflict);
+            response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
 
             var json = await response.Content.ReadAsStringAsync();
             var ajaxResponse = JsonSerializer.Deserialize<AjaxResponse>(json, new JsonSerializerOptions

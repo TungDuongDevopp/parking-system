@@ -78,11 +78,10 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
         var userId = AbpSession.UserId
             ?? throw new AbpAuthorizationException("User is not logged in.");
 
-        if (vehicle.Customer.UserId != userId)
+        var customer = await _customerRepository.FirstOrDefaultAsync(x => x.Id == vehicle.CustomerId);
+        if (customer == null || customer.UserId != userId)
         {
-            throw new AbpAuthorizationException(
-                "You do not have permission to view this vehicle."
-            );
+            throw new AbpAuthorizationException("You do not have permission to view this vehicle.");
         }
     }
     private string GenerateVehicleCode(VehicleType type)
@@ -145,13 +144,15 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
             throw new ResourceNotFoundException(
      "Customer profile not found for current user."
  );
-        var duplicated = await Repository.GetAll()
-            .IgnoreQueryFilters()
-        .AnyAsync(v => v.LicensePlate == input.LicensePlate);
-
-        if (duplicated)
+        if (!string.IsNullOrWhiteSpace(input.LicensePlate))
         {
-            throw new DuplicateResourceException("License plate already exists.");
+            var duplicated = await Repository.GetAll()
+                .IgnoreQueryFilters()
+                .AnyAsync(v => v.LicensePlate == input.LicensePlate);
+            if (duplicated)
+            {
+                throw new DuplicateResourceException("License plate already exists.");
+            }
         }
 
         var entity = ObjectMapper.Map<Vehicle>(input);
@@ -186,16 +187,17 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
             throw new ResourceNotFoundException("Vehicle not found with id: " + input.Id);
         }
         
-        var duplicated = await Repository.GetAll()
-            .IgnoreQueryFilters()
-        .AnyAsync(v =>
-        v.Id != input.Id &&
-        v.LicensePlate == input.LicensePlate);
-
-        if (duplicated)
+        if (!string.IsNullOrWhiteSpace(input.LicensePlate))
         {
-            throw new DuplicateResourceException("License plate already exists.");
+            var duplicated = await Repository.GetAll()
+                .IgnoreQueryFilters()
+                .AnyAsync(v =>v.Id != input.Id && v.LicensePlate == input.LicensePlate);
+            if (duplicated)
+            {
+                throw new DuplicateResourceException("License plate already exists.");
+            }
         }
+
         await CheckVehicleAccessAsync(entity);
         ObjectMapper.Map(input, entity);
 

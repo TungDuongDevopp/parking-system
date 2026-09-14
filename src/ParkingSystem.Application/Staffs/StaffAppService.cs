@@ -234,6 +234,8 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
         await CurrentUnitOfWork.SaveChangesAsync();
 
     }
+
+    [AbpAuthorize(PermissionNames.Pages_Staffs_Manager)]
     public async Task<StaffDto> ChangeStatusAsync(ChangeStatusDto input)
     {
         var entity = await Repository.GetAll()
@@ -246,19 +248,6 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
         }
         var userId = AbpSession.UserId
            ?? throw new AbpAuthorizationException("User is not logged in.");
-        var user = await _userManager.GetUserByIdAsync(userId);
-
-        if (user == null)
-        {
-            throw new ResourceNotFoundException("User not found with id " + userId);
-        }
-
-        var roles = await _userManager.GetRolesAsync(user);
-
-        if (!roles.Contains("Admin"))
-        {
-            throw new UserNotInRoleException("User does not have Admin role.");
-        }
 
         entity.Status = input.Status;
 
