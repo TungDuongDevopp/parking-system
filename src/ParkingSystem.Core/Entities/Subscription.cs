@@ -20,7 +20,7 @@ public class Subscription: Entity<long>, IHasCreationTime, IHasModificationTime
     public DateTime EndTime { get; set; }
 
     [Required]
-    public SubcriptionStatus Status { get; set; }
+    public SubscriptionStatus Status { get; set; }
 
     public Quotation Quotation { get; set; }
   
@@ -37,7 +37,7 @@ public class Subscription: Entity<long>, IHasCreationTime, IHasModificationTime
     public Subscription()
     {
         CreationTime = Clock.Now;
-        Status = SubcriptionStatus.PENDING;
+        Status = SubscriptionStatus.pending;
     }
 
     public ICollection<Payment> Payments { get; set; } = new List<Payment>();

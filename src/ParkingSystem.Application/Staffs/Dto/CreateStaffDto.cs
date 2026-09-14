@@ -2,7 +2,6 @@
 
 using Abp.AutoMapper;
 using ParkingSystem.Entities;
-using ParkingSystem.Entities.Enums;
 using ParkingSystem.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Linq;
+using ParkingSystem.Entities;
 
 namespace ParkingSystem.EntityFrameworkCore.Seed.Tenants;
 
@@ -36,6 +37,15 @@ public class TenantRoleAndUserBuilder
         if (adminRole == null)
         {
             adminRole = _context.Roles.Add(new Role(_tenantId, StaticRoleNames.Tenants.Admin, StaticRoleNames.Tenants.Admin) { IsStatic = true }).Entity;
+            _context.SaveChanges();
+        }
+
+        var staffRole = _context.Roles.IgnoreQueryFilters().FirstOrDefault(r=>r.TenantId == _tenantId && r.Name == StaticRoleNames.Tenants.Staff);
+
+        if (staffRole == null)
+        {
+            staffRole = _context.Roles.Add(new Role(_tenantId, StaticRoleNames.Tenants.Staff, StaticRoleNames.Tenants.Staff) { IsStatic = true }).Entity;
+   
             _context.SaveChanges();
         }
 

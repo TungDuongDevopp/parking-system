@@ -1,14 +1,11 @@
 ﻿
 
 using Abp.Application.Services.Dto;
-using Abp.AutoMapper;
-using ParkingSystem.Entities;
 using ParkingSystem.Entities.Enums;
 using System;
 
 namespace ParkingSystem.Staffs.Dto;
 
-[AutoMapFrom (typeof(Staff))]
 public class StaffDto : EntityDto<long>
 
 {
@@ -28,8 +25,8 @@ public class StaffDto : EntityDto<long>
 
     public DateTime DateOfBirth { get; set; }
 
-    public StaffStatus StaffStatus { get; set; }
-    public string StaffStatusName => StaffStatus.ToString();
+    public StaffStatus Status { get; set; }
+    public string StatusName => Status.ToString();
     public DateTime CreationTime { get; set; }
     public bool IsDeleted { get; set; }
 }

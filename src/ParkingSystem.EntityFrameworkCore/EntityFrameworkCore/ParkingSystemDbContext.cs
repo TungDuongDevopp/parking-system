@@ -46,11 +46,12 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
 
         modelBuilder.Entity<Customer>()
             .HasIndex(x => x.PhoneNumber)
-            .IsUnique();
+            .IsUnique()
+            .HasFilter("[IsDeleted] = 0"); ;
         modelBuilder.Entity<Customer>()
             .HasIndex(x => x.Email)
             .IsUnique()
-            .HasFilter("[Email] IS NOT NULL");
+            .HasFilter("[IsDeleted] = 0 AND [Email] IS NOT NULL");
 
         //Staff entity configuration
         modelBuilder.Entity<Staff>()
@@ -63,11 +64,12 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
 
         modelBuilder.Entity<Staff>()
             .HasIndex(x => x.PhoneNumber)
-            .IsUnique();
+            .IsUnique()
+            .HasFilter("[IsDeleted] = 0");
         modelBuilder.Entity<Staff>()
             .HasIndex(x => x.Email)
             .IsUnique()
-            .HasFilter("[Email] IS NOT NULL");
+            .HasFilter("[IsDeleted] = 0 AND [Email] IS NOT NULL");
 
         //Vehicle entity configuration
         modelBuilder.Entity<Vehicle>()
@@ -77,20 +79,28 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
                 .HasForeignKey(v => v.CustomerId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-     
+        
         modelBuilder.Entity<Vehicle>()
-            .HasIndex(v => v.VehicleCode)
-            .IsUnique();
+       .HasIndex(v => v.VehicleCode)
+       .IsUnique()
+       .HasFilter("[IsDeleted] = 0");
+
+        modelBuilder.Entity<Vehicle>()
+            .HasIndex(v => v.LicensePlate)
+            .IsUnique()
+            .HasFilter("[IsDeleted] = 0 AND [LicensePlate] IS NOT NULL");
 
         //ParkingArea entity configuration
         modelBuilder.Entity<ParkingArea>()
             .HasIndex(p => p.ParkingCode)
-            .IsUnique();
+            .IsUnique()
+            .HasFilter("[IsDeleted] = 0");
 
         //ParkingSpot entity configuration
         modelBuilder.Entity<ParkingSpot>()
              .HasIndex(s => new { s.ParkingAreaId, s.SpotCode })
-             .IsUnique();
+             .IsUnique()
+             .HasFilter("[IsDeleted] = 0");
 
         modelBuilder.Entity<ParkingSpot>()
             .HasOne(p => p.ParkingArea)
@@ -103,7 +113,8 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
         //Quotation entity configuration
         modelBuilder.Entity<Quotation>()
             .HasIndex(q => new { q.VehicleType, q.Duration, q.DurationUnit })
-            .IsUnique();
+            .IsUnique()
+            .HasFilter("[IsDeleted] = 0");
         //Subscription entity configuration
 
         modelBuilder.Entity<Subscription>()
@@ -140,18 +151,6 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
             .HasForeignKey(ps => ps.QuotationId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
-        // Apply global query filter for entities implementing ISoftDelete
-        var softDeleteInterface = typeof(Abp.Domain.Entities.ISoftDelete);
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(t => softDeleteInterface.IsAssignableFrom(t.ClrType)))
-        {
-            var clrType = entityType.ClrType;
-            var parameter = Expression.Parameter(clrType, "e");
-            var efPropertyMethod = typeof(EF).GetMethod(nameof(EF.Property), BindingFlags.Public | BindingFlags.Static)?.MakeGenericMethod(typeof(bool));
-            var isDeletedProperty = Expression.Call(efPropertyMethod!, parameter, Expression.Constant("IsDeleted"));
-            var condition = Expression.Equal(isDeletedProperty, Expression.Constant(false));
-            var lambda = Expression.Lambda(condition, parameter);
-            modelBuilder.Entity(clrType).HasQueryFilter(lambda);
-        }
 
         //Payment entity configuration
         modelBuilder.Entity<Payment>()
@@ -172,5 +171,11 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
         modelBuilder.Entity<PaymentTransaction>()
             .HasIndex(pt => pt.TransactionCode)
             .IsUnique();
+        //Money Configuration
+        modelBuilder.Entity<Quotation>().Property(q => q.Price).HasPrecision(18, 2);
+        modelBuilder.Entity<ParkingSession>().Property(ps => ps.Fee).HasPrecision(18, 2);
+        modelBuilder.Entity<Payment>().Property(p => p.ExpectedAmount).HasPrecision(18, 2);
+        modelBuilder.Entity<Payment>().Property(p => p.ReceivedAmount).HasPrecision(18, 2);
+        modelBuilder.Entity<PaymentTransaction>().Property(pt => pt.Amount).HasPrecision(18, 2);
     }
 }

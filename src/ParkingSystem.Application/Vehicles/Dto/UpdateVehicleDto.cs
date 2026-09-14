@@ -1,14 +1,11 @@
 ﻿
 
 using Abp.Application.Services.Dto;
-using Abp.AutoMapper;
-using ParkingSystem.Entities;
 using ParkingSystem.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace ParkingSystem.Vehicles.Dto;
 
-[AutoMap(typeof(Vehicle))]
 public class UpdateVehicleDto: EntityDto<long>
 {
 

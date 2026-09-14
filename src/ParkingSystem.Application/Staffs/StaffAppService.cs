@@ -9,7 +9,9 @@ using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Authorization;
 using ParkingSystem.Authorization.Users;
+using ParkingSystem.Customers.Dto;
 using ParkingSystem.Entities;
+using ParkingSystem.Entities.Enums;
 using ParkingSystem.Exceptions;
 using ParkingSystem.Staffs.Dto;
 using System.Linq;
@@ -32,8 +34,23 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
     }
 
     protected override IQueryable<Staff> CreateFilteredQuery(PagedStaffResultRequestDto input)
+
+
     {
-        return Repository.GetAll()
+        var query = Repository.GetAll().AsNoTracking();
+        var canViewAll = PermissionChecker.IsGranted(
+           PermissionNames.Pages_Staffs_Manager
+       );
+        if(!canViewAll)
+        {
+            var userId = AbpSession.UserId
+                ?? throw new AbpAuthorizationException(
+                    "User is not logged in."
+                );
+
+            query = query.Where(x => x.UserId == userId);
+        }
+        return query
             .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x =>
                 x.Name.Contains(input.Keyword) ||
                 x.PhoneNumber.Contains(input.Keyword) ||
@@ -70,6 +87,56 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
         return query.OrderByDescending(x => x.Id);
     }
 
+    private async Task CheckStaffModifyAccessAsync(Staff staff)
+    {
+        if (await PermissionChecker.IsGrantedAsync(
+            PermissionNames.Pages_Staffs_Manager))
+        {
+            return;
+        }
+
+        var userId = AbpSession.UserId
+            ?? throw new AbpAuthorizationException("User is not logged in.");
+
+        if (staff.UserId != userId)
+        {
+            throw new AbpAuthorizationException(
+                "You can only modify your own staff profile."
+            );
+        }
+    }
+    private async Task CheckStaffViewAccessAsync(Staff staff)
+    {
+        var canViewAll = await PermissionChecker.IsGrantedAsync(
+            PermissionNames.Pages_Staffs_Manager
+        );
+
+        if (canViewAll)
+            return;
+
+        var userId = AbpSession.UserId
+            ?? throw new AbpAuthorizationException("User is not logged in.");
+
+        if (staff.UserId != userId)
+        {
+            throw new AbpAuthorizationException(
+                "You do not have permission to view this staff."
+            );
+        }
+    }
+    public override async Task<StaffDto> GetAsync(EntityDto<long> input)
+    {
+        var staff = await Repository.FirstOrDefaultAsync(x => x.Id == input.Id);
+
+        if (staff == null)
+        {
+            throw new ResourceNotFoundException("Staff not found with id: " + input.Id);
+        }
+
+        await CheckStaffViewAccessAsync(staff);
+
+        return ObjectMapper.Map<StaffDto>(staff);
+    }
     public override async Task<StaffDto> CreateAsync(CreateStaffDto input)
     {
         // 1. Kiểm tra user tồn tại
@@ -128,14 +195,24 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
 
     public override async Task<StaffDto> UpdateAsync(UpdateStaffDto input)
     {
-        var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
+        var entity = await Repository.FirstOrDefaultAsync(input.Id);
         if (entity == null)
         {
             throw new ResourceNotFoundException("Staff not found with id: " + input.Id);
         }
-        if (entity.IsDeleted)
+        await CheckStaffModifyAccessAsync(entity);
+        var existStaff = await Repository
+           .GetAll()
+           .IgnoreQueryFilters()
+           .AnyAsync(x => x.Id != input.Id &&
+             (x.PhoneNumber == input.PhoneNumber ||
+               (input.Email != null && x.Email == input.Email)));
+
+        if (existStaff)
         {
-            throw new CannotManipulateException("Staff cannot be manipulated in its current status");
+            throw new DuplicateResourceException(
+                "A Staff with the same phone number or email already exists."
+            );
         }
         ObjectMapper.Map(input,entity);
 
@@ -146,19 +223,47 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
 
     public override async Task DeleteAsync(EntityDto<long> input)
     {
-        // Load entity including soft-deleted ones so we can return proper errors
-        var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
+        var entity = await Repository.FirstOrDefaultAsync(input.Id);
         if (entity == null)
         {
             throw new ResourceNotFoundException("Staff not found with id: " + input.Id);
         }
-        if (entity.IsDeleted)
-        {
-            throw new CannotManipulateException("Staff cannot be manipulated in its current status");
-        }
-
+       
+        await CheckStaffModifyAccessAsync(entity);
         await Repository.DeleteAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
 
+    }
+    public async Task<StaffDto> ChangeStatusAsync(ChangeStatusDto input)
+    {
+        var entity = await Repository.GetAll()
+            .FirstOrDefaultAsync(x => x.Id == input.Id);
+
+        if (entity == null)
+        {
+            throw new ResourceNotFoundException(
+                "Staff not found with id: " + input.Id);
+        }
+        var userId = AbpSession.UserId
+           ?? throw new AbpAuthorizationException("User is not logged in.");
+        var user = await _userManager.GetUserByIdAsync(userId);
+
+        if (user == null)
+        {
+            throw new ResourceNotFoundException("User not found with id " + userId);
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+
+        if (!roles.Contains("Admin"))
+        {
+            throw new UserNotInRoleException("User does not have Admin role.");
+        }
+
+        entity.Status = input.Status;
+
+        await CurrentUnitOfWork.SaveChangesAsync();
+
+        return MapToEntityDto(entity);
     }
 }

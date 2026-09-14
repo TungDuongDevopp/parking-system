@@ -68,7 +68,7 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
     protected override IQueryable<Customer> CreateFilteredQuery(
     PagedCustomerResultRequestDto input)
     {
-        var query = Repository.GetAll();
+        var query = Repository.GetAll().AsNoTracking();
 
         var canViewAll = PermissionChecker.IsGranted(
             PermissionNames.Pages_Customers_ViewAll
@@ -156,19 +156,30 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
     public override async Task<CustomerDto> UpdateAsync(UpdateCustomerDto input)
     {
         // Load entity including soft-deleted ones to detect deleted state
-        var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
+        var entity = await Repository.FirstOrDefaultAsync(input.Id);
         if (entity == null)
         {
             throw new ResourceNotFoundException("Customer not found with id: "+input.Id);
         }
-        if (entity.IsDeleted)
+ 
+        var existCustomer = await Repository
+           .GetAll()
+           .IgnoreQueryFilters()
+           .AnyAsync(x => x.Id != input.Id &&
+             (x.PhoneNumber == input.PhoneNumber ||
+               (input.Email != null && x.Email == input.Email)));
+
+        if (existCustomer)
         {
-            throw new CannotManipulateException("Customer cannot be manipulated in its current status");
+            throw new DuplicateResourceException(
+                "A customer with the same phone number or email already exists."
+            );
         }
         await CheckCustomerModifyAccessAsync(entity);
+       
 
-         // Ensure we preserve UserId and only update allowed fields
-         var originalUserId = entity.UserId;
+        // Ensure we preserve UserId and only update allowed fields
+        var originalUserId = entity.UserId;
 
         // Map incoming fields onto existing entity
         ObjectMapper.Map(input, entity);
@@ -185,17 +196,12 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
     public override async Task DeleteAsync(EntityDto<long> input)
     {
         // Load entity including soft-deleted ones so we can return proper errors
-        var entity = await Repository.GetAll().IgnoreQueryFilters().FirstOrDefaultAsync(x => x.Id == input.Id);
+        var entity = await Repository.FirstOrDefaultAsync(input.Id);
         if (entity == null)
         {
             throw new ResourceNotFoundException("Customer not found with id: " + input.Id);
         }
-        if (entity.IsDeleted)
-        {
-            throw new CannotManipulateException("Customer cannot be manipulated in its current status");
-        }
         await CheckCustomerModifyAccessAsync(entity);
-
         await Repository.DeleteAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
 
