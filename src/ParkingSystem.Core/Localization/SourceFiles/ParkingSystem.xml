@@ -4,6 +4,15 @@
     <text name="HomePage" value="Home page" />
     <text name="About" value="About" />
 	<text name="Customers" value="Customers"/>
+	<text name="Customers_ViewAll" value="Customers ViewAll"/>
+	<text name="Customers_ModifyAll" value="Customers ModifyAll"/>
+	<text name="Staffs" value="Staffs"/>
+	<text name="Staffs_Manager" value="Staffs Manager"/>
+	<text name="Vehicles" value="Vehicles"/>
+	  <text name="Vehicles_ViewAll" value="Vehicles ViewAll"/>
+	  <text name="Vehicles_ModifyAll" value="Vehicles ModifyAll"/>
+	  <text name="ParkingAreas" value="Parking Areas"/>
+	  <text name="ParkingAreas_Manager" value="Parking Areas Manager"/>
 	<text name="PhoneNumber" value="Phone number"/>
 	<text name="CreationTime" value="Creation time"/>
 	<text name="WelcomeMessage" value="Welcome to ParkingSystem!" />

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingSystem.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using ParkingSystem.EntityFrameworkCore;
 namespace ParkingSystem.Migrations
 {
     [DbContext(typeof(ParkingSystemDbContext))]
-    partial class ParkingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260915051409_Change ParkingSpot status")]
+    partial class ChangeParkingSpotstatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1642,9 +1645,6 @@ namespace ParkingSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -1672,12 +1672,6 @@ namespace ParkingSystem.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("VehicleType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("parkingMode")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -2142,55 +2136,6 @@ namespace ParkingSystem.Migrations
                     b.ToTable("AbpTenants");
                 });
 
-            modelBuilder.Entity("Reservation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ExpireAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("ParkingAreaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("ParkingSpotId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ReservedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ParkingAreaId");
-
-                    b.HasIndex("ParkingSpotId");
-
-                    b.ToTable("Reservations");
-                });
-
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
                 {
                     b.HasBaseType("Abp.Application.Features.FeatureSetting");
@@ -2543,32 +2488,6 @@ namespace ParkingSystem.Migrations
                     b.Navigation("LastModifierUser");
                 });
 
-            modelBuilder.Entity("Reservation", b =>
-                {
-                    b.HasOne("ParkingSystem.Entities.Customer", "Customer")
-                        .WithMany("Reservations")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ParkingSystem.Entities.ParkingArea", "ParkingArea")
-                        .WithMany()
-                        .HasForeignKey("ParkingAreaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ParkingSystem.Entities.ParkingSpot", "ParkingSpot")
-                        .WithMany()
-                        .HasForeignKey("ParkingSpotId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("ParkingArea");
-
-                    b.Navigation("ParkingSpot");
-                });
-
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
                 {
                     b.HasOne("Abp.Application.Editions.Edition", "Edition")
@@ -2642,8 +2561,6 @@ namespace ParkingSystem.Migrations
 
             modelBuilder.Entity("ParkingSystem.Entities.Customer", b =>
                 {
-                    b.Navigation("Reservations");
-
                     b.Navigation("Subscriptions");
 
                     b.Navigation("Vehicles");

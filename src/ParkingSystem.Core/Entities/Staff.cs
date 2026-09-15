@@ -7,11 +7,9 @@ using ParkingSystem.Entities.Enums;
 using ParkingSystem.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ParkingSystem.Entities;
 
-[Table("Staffs")]
 public class Staff : Entity<long>, IHasCreationTime, IHasModificationTime, ISoftDelete
 {
     [Required]

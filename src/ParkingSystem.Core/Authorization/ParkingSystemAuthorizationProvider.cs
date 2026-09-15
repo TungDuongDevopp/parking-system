@@ -27,7 +27,9 @@ public class ParkingSystemAuthorizationProvider : AuthorizationProvider
         context.CreatePermission(PermissionNames.Pages_Vehicles, L("Vehicles"));
         context.CreatePermission(PermissionNames.Pages_Vehicles_ModifyAll, L("Vehicles_ModifyAll"));
         context.CreatePermission(PermissionNames.Pages_Vehicles_ViewAll, L("Vehicles_ViewAll"));
-        
+        //Parking Area
+        context.CreatePermission(PermissionNames.Pages_ParkingAreas, L("ParkingAreas"));
+        context.CreatePermission(PermissionNames.Pages_ParkingAreasManager, L("ParkingAreas_Manager"));      
 
     }
 

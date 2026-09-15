@@ -14,4 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ParkingSystem.Core\ParkingSystem.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ParkingAreas\Dto\" />
+  </ItemGroup>
 </Project>

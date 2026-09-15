@@ -6,11 +6,8 @@ using ParkingSystem.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ParkingSystem.Entities;
-
-[Table("Subscriptions")]
 public class Subscription: Entity<long>, IHasCreationTime, IHasModificationTime
 
 

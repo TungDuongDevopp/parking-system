@@ -1,5 +1,4 @@
 ﻿
-using Abp;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
@@ -9,9 +8,7 @@ using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Authorization;
 using ParkingSystem.Authorization.Users;
-using ParkingSystem.Customers.Dto;
 using ParkingSystem.Entities;
-using ParkingSystem.Entities.Enums;
 using ParkingSystem.Exceptions;
 using ParkingSystem.Staffs.Dto;
 using System.Linq;
@@ -246,8 +243,6 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
             throw new ResourceNotFoundException(
                 "Staff not found with id: " + input.Id);
         }
-        var userId = AbpSession.UserId
-           ?? throw new AbpAuthorizationException("User is not logged in.");
 
         entity.Status = input.Status;
 
