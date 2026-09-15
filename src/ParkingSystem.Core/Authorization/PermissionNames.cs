@@ -33,4 +33,9 @@ public static class PermissionNames
 
     public const string Pages_Vehicles_ViewAll = "Pages.Vehicles.ViewAll";
 
+    //Parking Area
+    public const string Pages_ParkingAreas = "Pages.ParkingAreas";
+
+    public const string Pages_ParkingAreasManager = "Pages.ParkingAreas.Manager";
+
 }

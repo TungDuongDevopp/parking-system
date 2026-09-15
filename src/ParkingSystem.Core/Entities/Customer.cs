@@ -36,6 +36,8 @@ namespace ParkingSystem.Entities
         public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
 
         public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
+
+        public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
         public DateTime? LastModificationTime { get; set; }
         public bool IsDeleted { get; set; }
     }

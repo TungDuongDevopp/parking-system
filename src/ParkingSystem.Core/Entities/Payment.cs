@@ -4,7 +4,6 @@ using Abp.Domain.Entities.Auditing;
 using Abp.Timing;
 using ParkingSystem.Entities.Enums;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

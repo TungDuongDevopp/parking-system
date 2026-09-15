@@ -3,8 +3,8 @@
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Abp.Timing;
+using ParkingSystem.Entities.Enums;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,9 +21,17 @@ public class ParkingArea : Entity<long>, IHasCreationTime, IHasModificationTime,
     public string Name{ get; set; }
 
     [Required]
+    public VehicleType VehicleType { get; set; }
+
+    [Required]
+    public int Capacity { get; set; }
+
+    [Required]
+    public ParkingMode parkingMode { get; set; }
+    
+    [Required]
     [StringLength(255)]
     public string Location { get; set; }
-
 
     [StringLength(255)]
     public string Description{ get; set; }

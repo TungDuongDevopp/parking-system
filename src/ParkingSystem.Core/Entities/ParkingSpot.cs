@@ -2,6 +2,7 @@
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Abp.Timing;
+using ParkingSystem.Entities.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,7 +16,7 @@ public class ParkingSpot : Entity<long>, IHasCreationTime, IHasModificationTime,
     public string SpotCode { get; set; }
 
     [Required]
-    public bool IsFree { get; set; }
+    public ParkingSpotStatus Status{ get; set; }
     public DateTime CreationTime { get ; set; }
     public DateTime? LastModificationTime { get ; set; }
 
@@ -26,7 +27,7 @@ public class ParkingSpot : Entity<long>, IHasCreationTime, IHasModificationTime,
     public ParkingSpot()
     {
         CreationTime = Clock.Now;
-        IsFree = true;
+        Status = ParkingSpotStatus.Available;
         IsDeleted = false;
     }
     public bool IsDeleted { get; set; }

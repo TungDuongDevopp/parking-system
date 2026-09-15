@@ -31,6 +31,8 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
 
     public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
 
+    public DbSet<Reservation> Reservations { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -181,5 +183,27 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
         modelBuilder.Entity<Payment>().Property(p => p.ExpectedAmount).HasPrecision(18, 2);
         modelBuilder.Entity<Payment>().Property(p => p.ReceivedAmount).HasPrecision(18, 2);
         modelBuilder.Entity<PaymentTransaction>().Property(pt => pt.Amount).HasPrecision(18, 2);
+
+        //Reservation entity configuration
+
+        modelBuilder.Entity<Reservation>()
+            .HasOne(c => c.Customer)
+            .WithMany(r => r.Reservations)
+            .HasForeignKey(c => c.CustomerId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Reservation>()
+            .HasOne(r=>r.ParkingArea)
+            .WithMany()
+            .HasForeignKey(r=>r.ParkingAreaId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Reservation>()
+            .HasOne(r => r.ParkingSpot)
+            .WithMany()
+            .HasForeignKey(r => r.ParkingSpotId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
