@@ -9,7 +9,7 @@ public class CustomerMapProfile : Profile
 {
     public CustomerMapProfile()
     {
-        CreateMap<CustomerDto, Customer>();
+        CreateMap<Customer, CustomerDto>();
         CreateMap<CreateCustomerDto, Customer>();
         CreateMap<UpdateCustomerDto, Customer>()
     .ForAllMembers(opt =>

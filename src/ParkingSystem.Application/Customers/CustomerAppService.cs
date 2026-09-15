@@ -133,7 +133,6 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
 
         var existCustomer = await Repository
             .GetAll()
-            .IgnoreQueryFilters()
             .AnyAsync(x =>
                 x.PhoneNumber == input.PhoneNumber ||
                 (input.Email != null && x.Email == input.Email));
@@ -164,7 +163,6 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
  
         var existCustomer = await Repository
            .GetAll()
-           .IgnoreQueryFilters()
            .AnyAsync(x => x.Id != input.Id &&
              (x.PhoneNumber == input.PhoneNumber ||
                (input.Email != null && x.Email == input.Email)));

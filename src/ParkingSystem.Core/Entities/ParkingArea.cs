@@ -27,7 +27,7 @@ public class ParkingArea : Entity<long>, IHasCreationTime, IHasModificationTime,
     public int Capacity { get; set; }
 
     [Required]
-    public ParkingMode parkingMode { get; set; }
+    public ParkingMode ParkingMode { get; set; }
     
     [Required]
     [StringLength(255)]
