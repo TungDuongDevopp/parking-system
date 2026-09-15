@@ -9,7 +9,7 @@ public class StaffMapProfile : Profile
 {
    public StaffMapProfile()
     {
-        CreateMap<StaffDto,Staff>();
+        CreateMap<Staff,StaffDto>();
         CreateMap<CreateStaffDto, Staff>();
         CreateMap<UpdateStaffDto, Staff>()
     .ForAllMembers(opt =>

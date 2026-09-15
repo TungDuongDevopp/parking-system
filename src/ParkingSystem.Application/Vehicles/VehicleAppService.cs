@@ -3,7 +3,6 @@
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
-using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
@@ -116,7 +115,9 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
                 x.VehicleCode.Contains(input.Keyword))
 
         .WhereIf(input.VehicleType.HasValue,
-            x => x.VehicleType == input.VehicleType.Value);      
+            x => x.VehicleType == input.VehicleType.Value)
+        ;  
+     
     }
     
 
@@ -146,8 +147,7 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
  );
         if (!string.IsNullOrWhiteSpace(input.LicensePlate))
         {
-            var duplicated = await Repository.GetAll()
-                .IgnoreQueryFilters()
+            var duplicated = await Repository.GetAll()      
                 .AnyAsync(v => v.LicensePlate == input.LicensePlate);
             if (duplicated)
             {
@@ -190,8 +190,7 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
         if (!string.IsNullOrWhiteSpace(input.LicensePlate))
         {
             var duplicated = await Repository.GetAll()
-                .IgnoreQueryFilters()
-                .AnyAsync(v =>v.Id != input.Id && v.LicensePlate == input.LicensePlate);
+                       .AnyAsync(v =>v.Id != input.Id && v.LicensePlate == input.LicensePlate);
             if (duplicated)
             {
                 throw new DuplicateResourceException("License plate already exists.");

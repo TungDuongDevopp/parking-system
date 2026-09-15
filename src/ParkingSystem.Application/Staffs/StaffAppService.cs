@@ -167,7 +167,6 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
         // 4. Không trùng phone/email
         var existingStaff = await Repository
             .GetAll()
-            .IgnoreQueryFilters()
             .AnyAsync(x =>
                 x.PhoneNumber == input.PhoneNumber ||
                 (input.Email != null && x.Email == input.Email));
@@ -200,7 +199,6 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
         await CheckStaffModifyAccessAsync(entity);
         var existStaff = await Repository
            .GetAll()
-           .IgnoreQueryFilters()
            .AnyAsync(x => x.Id != input.Id &&
              (x.PhoneNumber == input.PhoneNumber ||
                (input.Email != null && x.Email == input.Email)));

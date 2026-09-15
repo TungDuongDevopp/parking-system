@@ -10,7 +10,7 @@ public class VehicleMapProfile : Profile
 {
     public VehicleMapProfile()
     {
-        CreateMap<VehicleDto, Vehicle>();
+        CreateMap<Vehicle, VehicleDto>();
         CreateMap<CreateVehicleDto, Vehicle>();
         CreateMap<UpdateVehicleDto, Vehicle>()
     .ForAllMembers(opt =>
