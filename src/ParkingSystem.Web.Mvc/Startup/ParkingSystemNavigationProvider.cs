@@ -52,9 +52,17 @@ public class ParkingSystemNavigationProvider : NavigationProvider
                     url: "Customer",
                     icon: "fas fa-address-book",
                     permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Customers)
-    )
-)
-            ;
+                )
+            ).AddItem(
+                new MenuItemDefinition(
+                    PageNames.Staffs,
+                    L("Staffs"),
+                    url: "Staff",
+                    icon: "fas fa-user-tie",
+                    permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Staffs)
+                )
+
+            );
 
     }
 
