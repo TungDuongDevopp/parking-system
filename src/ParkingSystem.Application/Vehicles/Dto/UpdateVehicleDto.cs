@@ -8,8 +8,8 @@ namespace ParkingSystem.Vehicles.Dto;
 
 public class UpdateVehicleDto: EntityDto<long>
 {
-
-    public VehicleType VehicleType { get; set; }
+    [EnumDataType(typeof(VehicleType))]
+    public VehicleType? VehicleType { get; set; }
 
     [StringLength(30)]
     public string? LicensePlate { get; set; }
@@ -18,5 +18,5 @@ public class UpdateVehicleDto: EntityDto<long>
     public string? Brand { get; set; }
 
     [StringLength(255)]
-    public string Color { get; set; }
+    public string? Color { get; set; }
 }

@@ -8,6 +8,7 @@ public class CreateVehicleDto
 {
   
     [Required]
+    [EnumDataType(typeof(VehicleType))]
     public VehicleType VehicleType { get; set; }
 
     [StringLength(30)]

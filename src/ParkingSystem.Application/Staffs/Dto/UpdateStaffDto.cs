@@ -10,11 +10,11 @@ public class UpdateStaffDto : EntityDto<long>
 {
     
     [StringLength(100)]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [StringLength(20)]
     [Phone]
-    public string PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
 
     [StringLength(255)]
     [EmailAddress]
@@ -23,7 +23,7 @@ public class UpdateStaffDto : EntityDto<long>
     public bool? Gender { get; set; } 
 
     [NotFuture(ErrorMessage = "Hired date cannot be in the future.")]
-    public DateTime HiredDate { get; set; }
+    public DateTime? HiredDate { get; set; }
 
     [NotFuture(ErrorMessage = "Date of birth cannot be in the future.")]
     public DateTime? DateOfBirth { get; set; }

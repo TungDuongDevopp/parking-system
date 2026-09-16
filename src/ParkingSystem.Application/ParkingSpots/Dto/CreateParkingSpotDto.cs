@@ -1,6 +1,5 @@
 ﻿
-using ParkingSystem.Entities.Enums;
-using System;
+
 using System.ComponentModel.DataAnnotations;
 
 namespace ParkingSystem.ParkingSpots.Dto;
