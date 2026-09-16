@@ -22,10 +22,14 @@ public class ParkingSession : Entity<long>, IHasCreationTime, IHasModificationTi
    
     public PaymentMethod? PaymentMethod { get; set; }
 
-    [Required]
-    public long ParkingSpotId { get; set; }
+    public long? ParkingSpotId { get; set; }
 
     public ParkingSpot ParkingSpot { get; set; }
+
+    [Required]
+    public long ParkingAreaId { get; set; }
+
+    public ParkingArea ParkingArea { get; set; }
 
     public long? VehicleId { get; set; }
 

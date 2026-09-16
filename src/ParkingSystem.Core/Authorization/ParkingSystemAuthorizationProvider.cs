@@ -29,8 +29,11 @@ public class ParkingSystemAuthorizationProvider : AuthorizationProvider
         context.CreatePermission(PermissionNames.Pages_Vehicles_ViewAll, L("Vehicles_ViewAll"));
         //Parking Area
         context.CreatePermission(PermissionNames.Pages_ParkingAreas, L("ParkingAreas"));
-        context.CreatePermission(PermissionNames.Pages_ParkingAreasManager, L("ParkingAreas_Manager"));      
-
+        context.CreatePermission(PermissionNames.Pages_ParkingAreas_Manager, L("ParkingAreas_Manager"));
+        //Parking Spot
+        context.CreatePermission(PermissionNames.Pages_ParkingSpots, L("ParkingSpots"));
+        context.CreatePermission(PermissionNames.Pages_ParkingSpots_Manager, L("ParkingSpots_Manager"));
+     
     }
 
     private static ILocalizableString L(string name)
