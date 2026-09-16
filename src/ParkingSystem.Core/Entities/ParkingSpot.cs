@@ -20,6 +20,7 @@ public class ParkingSpot : Entity<long>, IHasCreationTime, IHasModificationTime,
     public DateTime CreationTime { get ; set; }
     public DateTime? LastModificationTime { get ; set; }
 
+    [Required]
     public long ParkingAreaId { get; set; }
 
     public ParkingArea ParkingArea{ get; set; }

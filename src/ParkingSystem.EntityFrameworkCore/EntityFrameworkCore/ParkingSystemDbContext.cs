@@ -142,8 +142,14 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
             .HasOne(ps => ps.ParkingSpot)
             .WithMany()
             .HasForeignKey(ps => ps.ParkingSpotId)
-            .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ParkingSession>()
+           .HasOne(pa => pa.ParkingArea)
+           .WithMany()
+           .HasForeignKey(ps => ps.ParkingAreaId)
+           .IsRequired()
+           .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<ParkingSession>()
             .HasOne(ps => ps.Vehicle)
@@ -157,6 +163,7 @@ public class ParkingSystemDbContext(DbContextOptions<ParkingSystemDbContext> opt
             .HasForeignKey(ps => ps.QuotationId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+
 
         //Payment entity configuration
         modelBuilder.Entity<Payment>()

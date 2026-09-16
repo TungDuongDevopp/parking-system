@@ -1,0 +1,17 @@
+﻿
+using ParkingSystem.Entities.Enums;
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace ParkingSystem.ParkingSpots.Dto;
+
+public class CreateParkingSpotDto
+{
+
+    [Required]
+    [StringLength(30)]
+    public string SpotCode { get; set; }
+
+    [Required]
+    public long ParkingAreaId { get; set; }
+}

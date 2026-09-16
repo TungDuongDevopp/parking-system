@@ -20,7 +20,7 @@ public class ParkingAreaDto : EntityDto<long>
 
     public ParkingMode ParkingMode { get; set; }
 
-    public string ParkingModeName => ParkingCode.ToString();
+    public string ParkingModeName => ParkingMode.ToString();
 
     public string Location { get; set; }
 
@@ -29,5 +29,8 @@ public class ParkingAreaDto : EntityDto<long>
     public DateTime CreationTime { get; set; }
 
     public bool IsDeleted { get; set; }
+
+    public int OccupiedCount { get; set; }
+    public int AvailableCount { get; set; }
 
 }

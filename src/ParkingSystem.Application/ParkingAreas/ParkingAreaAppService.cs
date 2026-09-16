@@ -9,16 +9,14 @@ using Abp.Extensions;
 using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Authorization;
-using ParkingSystem.Authorization.Users;
-using ParkingSystem.Customers.Dto;
 using ParkingSystem.Entities;
 using ParkingSystem.Exceptions;
-using ParkingSystem.Staffs.Dto;
+using ParkingSystem.ParkingAreas.Dto;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
-namespace ParkingSystem.ParkingAreas.Dto;
+namespace ParkingSystem.ParkingAreas;
 
 [AbpAuthorize(PermissionNames.Pages_ParkingAreas)]
 public class ParkingAreaAppService: AsyncCrudAppService<ParkingArea,ParkingAreaDto,long,PagedParkingAreaResultRequestDto,CreateParkingAreaDto,UpdateParkingAreaDto>,IParkingAreaAppService
@@ -55,7 +53,7 @@ public class ParkingAreaAppService: AsyncCrudAppService<ParkingArea,ParkingAreaD
             x => x.Capacity <= input.MaxCapacity.Value);
     }
 
-    [AbpAuthorize(PermissionNames.Pages_ParkingAreasManager)]
+    [AbpAuthorize(PermissionNames.Pages_ParkingAreas_Manager)]
     public override async Task<ParkingAreaDto> CreateAsync(CreateParkingAreaDto input)
     {
         if (await Repository.GetAll().AnyAsync(x => x.ParkingCode == input.ParkingCode))
@@ -70,7 +68,7 @@ public class ParkingAreaAppService: AsyncCrudAppService<ParkingArea,ParkingAreaD
 
         return MapToEntityDto(created);
     }
-    [AbpAuthorize(PermissionNames.Pages_ParkingAreasManager)]
+    [AbpAuthorize(PermissionNames.Pages_ParkingAreas_Manager)]
     public override async Task<ParkingAreaDto> UpdateAsync(UpdateParkingAreaDto input)
     {
         var entity = await Repository.FirstOrDefaultAsync(input.Id);
@@ -105,7 +103,7 @@ public class ParkingAreaAppService: AsyncCrudAppService<ParkingArea,ParkingAreaD
         return ObjectMapper.Map<ParkingAreaDto>(parkingArea);
     }
 
-    [AbpAuthorize(PermissionNames.Pages_ParkingAreasManager)]
+    [AbpAuthorize(PermissionNames.Pages_ParkingAreas_Manager)]
     public override async Task DeleteAsync(EntityDto<long> input)
     {
         var entity = await Repository.FirstOrDefaultAsync(input.Id);
