@@ -39,10 +39,13 @@ public static class PermissionNames
     public const string Pages_ParkingAreas_Manager = "Pages.ParkingAreas.Manager";
 
     //Parking Spot
-
     public const string Pages_ParkingSpots = "Pages.ParkingSpots";
 
     public const string Pages_ParkingSpots_Manager = "Pages.ParkingSpots.Manager";
+
+    //Quotation
+    public const string Pages_Quotations = "Pages.Quotations";
+
 
 
 

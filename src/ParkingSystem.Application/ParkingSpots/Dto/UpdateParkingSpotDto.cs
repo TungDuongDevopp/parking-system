@@ -8,6 +8,6 @@ namespace ParkingSystem.ParkingSpots.Dto;
 public class UpdateParkingSpotDto: EntityDto<long>
 {
     [StringLength(30)]
-    public string SpotCode { get; set; }
+    public string? SpotCode { get; set; }
 
 }

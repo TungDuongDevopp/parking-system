@@ -2,7 +2,6 @@
 
 using AutoMapper;
 using ParkingSystem.Entities;
-using ParkingSystem.ParkingAreas.Dto;
 
 namespace ParkingSystem.ParkingSpots.Dto;
 

@@ -2,6 +2,7 @@
 
 using Abp.Application.Services.Dto;
 using ParkingSystem.Entities.Enums;
+using System;
 
 
 namespace ParkingSystem.ParkingSpots.Dto;
@@ -12,5 +13,8 @@ public class ParkingSpotDto: EntityDto<long>
     public ParkingSpotStatus Status { get; set; }
 
     public long ParkingAreaId { get; set; }
+
+    public DateTime CreationTime { get; set; }
+    public bool IsDeleted { get; set; }
 
 }

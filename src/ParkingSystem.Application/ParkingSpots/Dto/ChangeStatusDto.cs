@@ -4,10 +4,10 @@ using ParkingSystem.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace ParkingSystem.ParkingAreas.Dto;
+namespace ParkingSystem.ParkingSpots.Dto;
 
 public class ChangeStatusDto:EntityDto<long>
 {
-    [Required]
+    [EnumDataType(typeof(ParkingSpotStatus))]
     public ParkingSpotStatus Status { get; set; }
 }

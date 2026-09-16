@@ -1,5 +1,6 @@
 ﻿
 using ParkingSystem.Entities.Enums;
+using ParkingSystem.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace ParkingSystem.ParkingAreas.Dto;
@@ -15,13 +16,13 @@ public class CreateParkingAreaDto
     [StringLength(30)]
     public string Name { get; set; }
 
-    [Required]
+    [EnumDataType(typeof(VehicleType))]
     public VehicleType VehicleType { get; set; }
 
-    [Required]
+    [GreaterThanZero]
     public int Capacity { get; set; }
 
-    [Required]
+    [EnumDataType(typeof(ParkingMode))]
     public ParkingMode ParkingMode { get; set; }
 
     [Required]

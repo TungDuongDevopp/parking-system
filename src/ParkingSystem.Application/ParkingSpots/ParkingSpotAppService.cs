@@ -11,7 +11,6 @@ using ParkingSystem.Authorization;
 using ParkingSystem.Entities;
 using ParkingSystem.Entities.Enums;
 using ParkingSystem.Exceptions;
-using ParkingSystem.ParkingAreas.Dto;
 using ParkingSystem.ParkingSpots.Dto;
 using System;
 using System.Linq;

@@ -31,5 +31,6 @@ public class Quotation : Entity<long>, IHasCreationTime, IHasModificationTime,IS
     public Quotation()
     {
         CreationTime = Clock.Now;
+        IsDeleted = false;
     }
 }
