@@ -13,4 +13,6 @@ public class PageNames
     public const string Roles = "Roles";
     public const string Customers = "Customers";
 
+    public const string Staffs = "Staffs";
+
 }
