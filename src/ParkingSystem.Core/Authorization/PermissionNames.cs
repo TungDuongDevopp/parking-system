@@ -46,6 +46,8 @@ public static class PermissionNames
     //Quotation
     public const string Pages_Quotations = "Pages.Quotations";
 
+    public const string Pages_Quotations_Manager = "Pages.Quotations.Manager";
+
 
 
 

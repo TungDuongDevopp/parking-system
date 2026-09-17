@@ -9,7 +9,13 @@ public class ParkingSpotMapProfile: Profile
 {
     public ParkingSpotMapProfile()
     {
-        CreateMap<ParkingSpot, ParkingSpotDto>();
+        CreateMap<ParkingSpot, ParkingSpotDto>()
+    .ForMember(
+        d => d.ParkingAreaCode,
+        o => o.MapFrom(s => s.ParkingArea.ParkingCode))
+    .ForMember(
+        d => d.ParkingAreaName,
+        o => o.MapFrom(s => s.ParkingArea.Name));
         CreateMap<CreateParkingSpotDto, ParkingSpot>();
         CreateMap<UpdateParkingSpotDto, ParkingSpot>()
              .ForAllMembers(opt =>

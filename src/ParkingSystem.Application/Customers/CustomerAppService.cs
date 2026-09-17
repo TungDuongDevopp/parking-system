@@ -10,6 +10,7 @@ using ParkingSystem.Authorization.Users;
 using ParkingSystem.Customers.Dto;
 using ParkingSystem.Entities;
 using ParkingSystem.Exceptions;
+using ParkingSystem.Helpers;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
@@ -109,7 +110,14 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
     {
         if (!string.IsNullOrEmpty(input.Sorting))
         {
-            return query.OrderBy(input.Sorting);
+            var sorting = SortingHelper.ValidateSorting(
+           input.Sorting,
+           nameof(Customer.Id),  
+           nameof(Customer.Email),
+           nameof(Customer.CreationTime)
+            );
+
+            return query.OrderBy(sorting);
         }
         return query.OrderByDescending(x => x.Id);
     }

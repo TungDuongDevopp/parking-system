@@ -35,6 +35,7 @@ public class ParkingSystemAuthorizationProvider : AuthorizationProvider
         context.CreatePermission(PermissionNames.Pages_ParkingSpots_Manager, L("ParkingSpots_Manager"));
         //Quotation
         context.CreatePermission(PermissionNames.Pages_Quotations, L("Quotations"));
+        context.CreatePermission(PermissionNames.Pages_Quotations_Manager, L("Quotations_Manager"));
 
     }
 

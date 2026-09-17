@@ -4,15 +4,15 @@ using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Collections.Extensions;
-using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Authorization;
 using ParkingSystem.Entities;
 using ParkingSystem.Exceptions;
-using ParkingSystem.ParkingAreas.Dto;
+using ParkingSystem.Helpers;
 using ParkingSystem.Quotations.Dto;
+using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
@@ -32,7 +32,17 @@ public class QuotationAppService: AsyncCrudAppService<Quotation,QuotationDto,lon
     {
         if (!string.IsNullOrEmpty(input.Sorting))
         {
-            return query.OrderBy(input.Sorting);
+            var sorting = SortingHelper.ValidateSorting(
+            input.Sorting,
+            nameof(Quotation.Id),
+            nameof(Quotation.VehicleType),
+            nameof(Quotation.Duration),
+            nameof(Quotation.Price),
+            nameof(Quotation.CreationTime),
+            nameof(Quotation.DurationUnit)
+             );
+
+            return query.OrderBy(sorting);
         }
         return query.OrderByDescending(x => x.Id);
     }
@@ -53,6 +63,7 @@ public class QuotationAppService: AsyncCrudAppService<Quotation,QuotationDto,lon
             x => x.Price <= input.MaxPrice.Value);
     }
 
+    [AbpAuthorize(PermissionNames.Pages_Quotations_Manager)]
     public override async Task<QuotationDto>  UpdateAsync(UpdateQuotationDto input)
     {
         var entity = await Repository.FirstOrDefaultAsync(input.Id);
@@ -61,25 +72,30 @@ public class QuotationAppService: AsyncCrudAppService<Quotation,QuotationDto,lon
         {
             throw new ResourceNotFoundException("Quotation not found with id: " + input.Id);
         }
-        var exists = await Repository.GetAll().AnyAsync(
-         x => x.Id != input.Id
-               && x.Duration == input.Duration
-               && x.DurationUnit == input.DurationUnit
-               && x.VehicleType == input.VehicleType
-        );
+        var vehicleType = input.VehicleType ?? entity.VehicleType;
+        var duration = input.Duration ?? entity.Duration;
+        var durationUnit = input.DurationUnit ?? entity.DurationUnit;
 
+        var exists = await Repository.GetAll().AnyAsync(
+            x => x.Id != input.Id
+              && x.Duration == duration
+              && x.DurationUnit == durationUnit
+              && x.VehicleType == vehicleType
+        );
         if (exists)
         {
             throw new DuplicateResourceException("Quotation already exists.");
         }
-        
+     
         ObjectMapper.Map(input, entity);
-
+       
         await Repository.UpdateAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
         return MapToEntityDto(entity);
     }
 
+
+    [AbpAuthorize(PermissionNames.Pages_Quotations_Manager)]
     public override async Task<QuotationDto> CreateAsync(CreateQuotationDto input)
     {
         var exists = await Repository.GetAll().AnyAsync(
@@ -112,6 +128,7 @@ public class QuotationAppService: AsyncCrudAppService<Quotation,QuotationDto,lon
         return ObjectMapper.Map<QuotationDto>(quotation);
     }
 
+    [AbpAuthorize(PermissionNames.Pages_Quotations_Manager)]
     public override async Task DeleteAsync(EntityDto<long> input)
     {
         var entity = await Repository.FirstOrDefaultAsync(input.Id);

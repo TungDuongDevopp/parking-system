@@ -11,7 +11,6 @@ namespace ParkingSystem.Entities;
 
 public class Quotation : Entity<long>, IHasCreationTime, IHasModificationTime,ISoftDelete
 
-
 {
     [Required]
     public VehicleType VehicleType { get; set; }

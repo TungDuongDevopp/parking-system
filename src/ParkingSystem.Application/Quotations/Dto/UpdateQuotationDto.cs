@@ -9,7 +9,7 @@ namespace ParkingSystem.Quotations.Dto;
 public class UpdateQuotationDto:EntityDto<long>
 {
     [EnumDataType(typeof(VehicleType))]
-    public VehicleType ?VehicleType { get; set; }
+    public VehicleType? VehicleType { get; set; }
    
     [GreaterThanZero]
     public int? Duration { get; set; }
@@ -17,5 +17,5 @@ public class UpdateQuotationDto:EntityDto<long>
     [EnumDataType(typeof(DurationUnit))]
     public DurationUnit? DurationUnit { get; set; }
     [GreaterThanZero]
-    public decimal ?Price { get; set; }
+    public decimal? Price { get; set; }
 }

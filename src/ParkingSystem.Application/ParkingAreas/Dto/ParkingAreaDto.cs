@@ -30,7 +30,8 @@ public class ParkingAreaDto : EntityDto<long>
 
     public bool IsDeleted { get; set; }
 
-    public int OccupiedCount { get; set; }
-    public int AvailableCount { get; set; }
+    public ParkingAreaStatus Status { get; set; }
+
+    public string ParkingAreaStatusName => Status.ToString();
 
 }

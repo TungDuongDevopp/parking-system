@@ -1,4 +1,4 @@
-﻿
+
 
 using AutoMapper;
 using ParkingSystem.Entities;
@@ -14,7 +14,14 @@ public class ParkingAreaMapProfile: Profile
         CreateMap<CreateParkingAreaDto, ParkingArea>();
 
         CreateMap<UpdateParkingAreaDto, ParkingArea>()
-             .ForAllMembers(opt =>
-        opt.Condition((src, dest, srcMember) => srcMember != null)); 
+            .ForMember(d => d.VehicleType, opt =>
+                opt.PreCondition(s => s.VehicleType.HasValue))
+            .ForMember(d => d.Capacity, opt =>
+                opt.PreCondition(s => s.Capacity.HasValue))
+            .ForMember(d => d.ParkingMode, opt =>
+                opt.PreCondition(s => s.ParkingMode.HasValue))
+            .ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<ChangeStatusDto,ParkingArea>();
     }
 }
