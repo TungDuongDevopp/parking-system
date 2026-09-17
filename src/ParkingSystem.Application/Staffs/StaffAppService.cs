@@ -10,6 +10,7 @@ using ParkingSystem.Authorization;
 using ParkingSystem.Authorization.Users;
 using ParkingSystem.Entities;
 using ParkingSystem.Exceptions;
+using ParkingSystem.Helpers;
 using ParkingSystem.Staffs.Dto;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -79,7 +80,18 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
     {
         if (!string.IsNullOrEmpty(input.Sorting))
         {
-            return query.OrderBy(input.Sorting);
+            var sorting = SortingHelper.ValidateSorting(
+             input.Sorting,
+             nameof(Staff.Id),
+             nameof(Staff.Address),
+             nameof(Staff.Email),
+             nameof(Staff.CreationTime),
+             nameof(Staff.HiredDate),
+             nameof(Staff.Status),
+             nameof(Staff.DateOfBirth)
+              );
+
+            return query.OrderBy(sorting);
         }
         return query.OrderByDescending(x => x.Id);
     }

@@ -11,6 +11,7 @@ using ParkingSystem.Authorization;
 using ParkingSystem.Entities;
 using ParkingSystem.Entities.Enums;
 using ParkingSystem.Exceptions;
+using ParkingSystem.Helpers;
 using ParkingSystem.ParkingSpots.Dto;
 using System;
 using System.Linq;
@@ -32,13 +33,23 @@ public class ParkingSpotAppService : AsyncCrudAppService<ParkingSpot,ParkingSpot
     {
         if (!string.IsNullOrEmpty(input.Sorting))
         {
-            return query.OrderBy(input.Sorting);
+            var sorting = SortingHelper.ValidateSorting(
+             input.Sorting,
+             nameof(ParkingSpot.Id),
+             nameof(ParkingSpot.Status),
+             nameof(ParkingSpot.ParkingAreaId),  
+             nameof(ParkingSpot.CreationTime),
+             nameof(ParkingSpot.SpotCode)
+              );
+
+            return query.OrderBy(sorting);
         }
         return query.OrderByDescending(x => x.Id);
     }
     protected override IQueryable<ParkingSpot> CreateFilteredQuery(PagedParkingSpotResultRequestDto input)
     {
-        var query = Repository.GetAll().AsNoTracking();
+        var query = Repository.GetAll()
+    .Include(x => x.ParkingArea).AsNoTracking();
 
         return query
             .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.SpotCode.Contains(input.Keyword))
@@ -67,14 +78,31 @@ public class ParkingSpotAppService : AsyncCrudAppService<ParkingSpot,ParkingSpot
         var area = await _parkingAreaRepository.FirstOrDefaultAsync(x => x.Id == input.ParkingAreaId);
         if(area == null)
         {
-          throw new ResourceNotFoundException("Parking Spot not found with id: " + input.ParkingAreaId);
+          throw new ResourceNotFoundException("Parking Area not found with id: " + input.ParkingAreaId);
         }
-        if (area.ParkingMode != ParkingMode.individualSport)
+        if (area.ParkingMode != ParkingMode.individualSpot)
         {
             throw new BusinessRuleException(
                 "Parking spots can only be created for individual parking areas."
             );
         }
+        
+
+        var existAreaCode = await Repository.GetAll()
+                .AnyAsync(x =>
+                    x.SpotCode == input.SpotCode);
+
+       if (existAreaCode)
+         {
+            throw new DuplicateResourceException(
+                "Parking spot code already exists.");
+         }
+        var currentNumSpot = await Repository.CountAsync(x => x.ParkingAreaId == area.Id);
+        if(currentNumSpot>= area.Capacity)
+        {
+            throw new BusinessRuleException("Cannot create parking spot because the parking area has reached its capacity.");
+        }
+
         var entity = ObjectMapper.Map<ParkingSpot>(input);
         var created = await Repository.InsertAsync(entity);
 
@@ -91,7 +119,20 @@ public class ParkingSpotAppService : AsyncCrudAppService<ParkingSpot,ParkingSpot
         {
             throw new ResourceNotFoundException("Parking Spot not found with id: " + input.Id);
         }
-       
+        if (!string.IsNullOrWhiteSpace(input.SpotCode) && input.SpotCode != entity.SpotCode)
+        {
+            var existAreaCode = await Repository.GetAll()
+                .AnyAsync(x =>
+                    x.Id != input.Id &&
+                    x.SpotCode == input.SpotCode);
+
+            if (existAreaCode)
+            {
+                throw new DuplicateResourceException(
+                    "Parking spot code already exists.");
+            }
+        }
+
         ObjectMapper.Map(input, entity);
 
         await Repository.UpdateAsync(entity);
@@ -108,7 +149,10 @@ public class ParkingSpotAppService : AsyncCrudAppService<ParkingSpot,ParkingSpot
         {
             throw new ResourceNotFoundException("Parking Spot not found with id: " + input.Id);
         }
-
+        if(entity.Status == ParkingSpotStatus.Occupied || entity.Status == ParkingSpotStatus.Reserved)
+        {
+            throw new CannotManipulateException("Spot can not maniputate in its current status");
+        }
         await Repository.DeleteAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
 

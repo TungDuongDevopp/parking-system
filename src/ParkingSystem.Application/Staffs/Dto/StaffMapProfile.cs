@@ -1,4 +1,4 @@
-﻿
+
 
 using AutoMapper;
 using ParkingSystem.Entities;
@@ -12,8 +12,10 @@ public class StaffMapProfile : Profile
         CreateMap<Staff,StaffDto>();
         CreateMap<CreateStaffDto, Staff>();
         CreateMap<UpdateStaffDto, Staff>()
-    .ForAllMembers(opt =>
-        opt.Condition((src, dest, srcMember) => srcMember != null));
+            .ForMember(d => d.HiredDate, opt =>
+                opt.PreCondition(s => s.HiredDate.HasValue))
+            .ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) => srcMember != null));
         CreateMap<ChangeStatusDto, Staff>();
     }
 }

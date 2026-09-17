@@ -36,6 +36,9 @@ public class ParkingArea : Entity<long>, IHasCreationTime, IHasModificationTime,
     [StringLength(255)]
     public string Description{ get; set; }
 
+    [Required]
+    public ParkingAreaStatus Status { get; set; }
+
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
 
@@ -46,5 +49,6 @@ public class ParkingArea : Entity<long>, IHasCreationTime, IHasModificationTime,
     {
         CreationTime = Clock.Now;
         IsDeleted = false;
+        Status = ParkingAreaStatus.Active;
     }
 }

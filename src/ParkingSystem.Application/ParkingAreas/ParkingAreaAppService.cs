@@ -10,7 +10,9 @@ using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Authorization;
 using ParkingSystem.Entities;
+using ParkingSystem.Entities.Enums;
 using ParkingSystem.Exceptions;
+using ParkingSystem.Helpers;
 using ParkingSystem.ParkingAreas.Dto;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -21,14 +23,37 @@ namespace ParkingSystem.ParkingAreas;
 [AbpAuthorize(PermissionNames.Pages_ParkingAreas)]
 public class ParkingAreaAppService: AsyncCrudAppService<ParkingArea,ParkingAreaDto,long,PagedParkingAreaResultRequestDto,CreateParkingAreaDto,UpdateParkingAreaDto>,IParkingAreaAppService
 {
-    public ParkingAreaAppService(IRepository<ParkingArea,long> repository) : base(repository) { }
+    private readonly IRepository<ParkingSpot, long> _parkingSpotRepository;
+
+    public ParkingAreaAppService(IRepository<ParkingArea,long> repository, IRepository<ParkingSpot, long> parkingSpotRepository) : base(repository) {
+        _parkingSpotRepository = parkingSpotRepository;
+    }
+    private void EnsureAreaConfigurable(ParkingArea area)
+    {
+        if (area.Status == ParkingAreaStatus.Active)
+        {
+            throw new CannotManipulateException(
+                "Cannot modify parking area configuration while it is active.");
+        }
+    }
 
 
     protected override IQueryable<ParkingArea> ApplySorting(IQueryable<ParkingArea> query, PagedParkingAreaResultRequestDto input)
     {
         if (!string.IsNullOrEmpty(input.Sorting))
         {
-            return query.OrderBy(input.Sorting);
+            var sorting = SortingHelper.ValidateSorting(
+              input.Sorting,
+              nameof(ParkingArea.Id),
+              nameof(ParkingArea.ParkingCode),
+              nameof(ParkingArea.Name),
+              nameof(ParkingArea.Location),
+              nameof(ParkingArea.CreationTime),
+              nameof(ParkingArea.Status),
+              nameof(ParkingArea.Capacity)
+               );
+
+            return query.OrderBy(sorting);
         }
         return query.OrderByDescending(x => x.Id);
     }
@@ -76,12 +101,22 @@ public class ParkingAreaAppService: AsyncCrudAppService<ParkingArea,ParkingAreaD
         {
             throw new ResourceNotFoundException("Parking area not found with id: "+input.Id);
         }
-        var existAreaCode = await Repository.GetAll()
-             .AnyAsync(x => x.Id != input.Id && x.ParkingCode == input.ParkingCode);
+        if(!string.IsNullOrWhiteSpace(input.ParkingCode) && input.ParkingCode != entity.ParkingCode)
+{
+            var existAreaCode = await Repository.GetAll()
+                .AnyAsync(x =>
+                    x.Id != input.Id &&
+                    x.ParkingCode == input.ParkingCode);
 
-        if (existAreaCode)
+            if (existAreaCode)
+            {
+                throw new DuplicateResourceException(
+                    "Parking area code already exists.");
+            }
+        }
+        if (input.Capacity.HasValue || input.ParkingMode.HasValue || input.VehicleType.HasValue)
         {
-            throw new DuplicateResourceException("Parking area code already exists.");
+            EnsureAreaConfigurable(entity);
         }
         
         ObjectMapper.Map(input, entity);
@@ -111,10 +146,30 @@ public class ParkingAreaAppService: AsyncCrudAppService<ParkingArea,ParkingAreaD
         {
             throw new ResourceNotFoundException("Parking Area not found with id: " + input.Id);
         }
+        EnsureAreaConfigurable(entity);
 
+        var hasSpots = await _parkingSpotRepository
+        .GetAll()
+        .AnyAsync(x => x.ParkingAreaId == input.Id);
+
+        if (hasSpots)
+        {
+            throw new CannotManipulateException(
+                "Cannot delete parking area because it still contains parking spots.");
+        }
         await Repository.DeleteAsync(entity);
         await CurrentUnitOfWork.SaveChangesAsync();
 
+    }
+    [AbpAuthorize(PermissionNames.Pages_ParkingAreas_Manager)]
+    public  async Task<ParkingAreaDto> ChangeStatus(ChangeStatusDto input)
+    {
+        var entity = await Repository.FirstOrDefaultAsync(input.Id);
+
+        entity.Status = input.Status;
+        await Repository.UpdateAsync(entity);
+        await CurrentUnitOfWork.SaveChangesAsync();
+        return MapToEntityDto(entity);
     }
 
 

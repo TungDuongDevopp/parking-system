@@ -4,6 +4,6 @@ namespace ParkingSystem.Entities.Enums;
 
 public enum ParkingMode
 {
-    individualSport = 0,
+    individualSpot = 0,
     capacityBase =1
 }

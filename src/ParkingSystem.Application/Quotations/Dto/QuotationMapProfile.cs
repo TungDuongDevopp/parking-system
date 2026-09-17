@@ -11,8 +11,14 @@ public class QuotationMapProfile: Profile
     {
         CreateMap<Quotation, QuotationDto>();
         CreateMap<UpdateQuotationDto, Quotation>()
-             .ForAllMembers(opt =>
-        opt.Condition((src, dest, srcMember) => srcMember != null));
+    .ForMember(d => d.VehicleType, opt =>
+        opt.PreCondition(s => s.VehicleType.HasValue))
+    .ForMember(d => d.Duration, opt =>
+        opt.PreCondition(s => s.Duration.HasValue))
+    .ForMember(d => d.DurationUnit, opt =>
+        opt.PreCondition(s => s.DurationUnit.HasValue))
+    .ForMember(d => d.Price, opt =>
+        opt.PreCondition(s => s.Price.HasValue));
         CreateMap<CreateQuotationDto, Quotation>();
     }
 }

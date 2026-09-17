@@ -16,6 +16,7 @@
 	<text name="ParkingSpots" value="Parking Spots"/>
 	<text name="ParkingSpots_Manager" value="Parking Spots Manager"/>
 	<text name="Quotations" value="Quotations"/>
+	<text name="Quotations_Manager" value="Quotations Manager"/>
 	  
 	<text name="PhoneNumber" value="Phone number"/>
 	<text name="CreationTime" value="Creation time"/>

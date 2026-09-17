@@ -12,6 +12,7 @@ using ParkingSystem.Authorization;
 using ParkingSystem.Entities;
 using ParkingSystem.Entities.Enums;
 using ParkingSystem.Exceptions;
+using ParkingSystem.Helpers;
 using ParkingSystem.Vehicles.Dto;
 using System;
 using System.Linq;
@@ -126,7 +127,18 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
     {
         if (!string.IsNullOrEmpty(input.Sorting))
         {
-            return query.OrderBy(input.Sorting);
+            var sorting = SortingHelper.ValidateSorting(
+             input.Sorting,
+             nameof(Vehicle.Id),
+             nameof(Vehicle.VehicleType),
+             nameof(Vehicle.Brand),
+             nameof(Vehicle.Color),
+             nameof(Vehicle.CustomerId),
+             nameof(Vehicle.CreationTime),
+             nameof(Vehicle.VehicleCode)
+              );
+
+            return query.OrderBy(sorting);
         }
         return query.OrderByDescending(x => x.Id);
     }

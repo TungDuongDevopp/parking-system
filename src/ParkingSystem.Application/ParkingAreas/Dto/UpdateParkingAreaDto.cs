@@ -23,7 +23,7 @@ public class UpdateParkingAreaDto: EntityDto<long>
     public int? Capacity { get; set; }
 
     [EnumDataType(typeof(ParkingMode))]
-    public ParkingMode ParkingMode { get; set; }
+    public ParkingMode? ParkingMode { get; set; }
 
     [StringLength(255)]
     public string? Location { get; set; }

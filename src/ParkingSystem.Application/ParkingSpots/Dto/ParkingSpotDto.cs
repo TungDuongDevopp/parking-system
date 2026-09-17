@@ -14,6 +14,9 @@ public class ParkingSpotDto: EntityDto<long>
 
     public long ParkingAreaId { get; set; }
 
+    public string ParkingAreaCode { get; set; }
+    public string ParkingAreaName { get; set; }
+
     public DateTime CreationTime { get; set; }
     public bool IsDeleted { get; set; }
 
