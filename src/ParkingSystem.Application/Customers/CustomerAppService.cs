@@ -6,7 +6,6 @@ using Abp.Extensions;
 using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Authorization;
-using ParkingSystem.Authorization.Users;
 using ParkingSystem.Customers.Dto;
 using ParkingSystem.Entities;
 using ParkingSystem.Exceptions;
@@ -114,7 +113,9 @@ public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, lon
            input.Sorting,
            nameof(Customer.Id),  
            nameof(Customer.Email),
-           nameof(Customer.CreationTime)
+           nameof(Customer.CreationTime),
+           nameof(Customer.PhoneNumber),
+           nameof(Customer.Name)
             );
 
             return query.OrderBy(sorting);

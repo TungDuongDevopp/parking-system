@@ -17,6 +17,22 @@
 	<text name="ParkingSpots_Manager" value="Parking Spots Manager"/>
 	<text name="Quotations" value="Quotations"/>
 	<text name="Quotations_Manager" value="Quotations Manager"/>
+	 
+	 //Cấu hình trang vehicle
+	<text name="CreateNewVehicle" value="Create new vehicle" />
+	<text name="EditVehicle" value="Edit vehicle" />
+	<text name="VehicleCode" value="Code" />
+	<text name="VehicleType" value="Type" />
+	<text name="LicensePlate" value="License Plate" />
+	<text name="Brand" value="Brand" />
+	<text name="Color" value="Color" />
+	<text name="CustomerName" value="Customer Name" />
+	<text name="Type" value="Type" />
+	<text name="Bicycle" value="Bicycle" />
+	<text name="ElectricBicycle" value="ElectricBicycle" />
+	<text name="Motorcycle" value="Motorcycle" />
+	<text name="ElectricMotorcycle" value="ElectricMotorcycle" />
+	  <text name="Car" value="Car" />  
 	  
 	<text name="PhoneNumber" value="Phone number"/>
 	<text name="CreationTime" value="Creation time"/>
@@ -48,7 +64,9 @@
     <text name="CreateNewTenant" value="Create new tenant" />
     <text name="AdminEmailAddress" value="Admin email address" />
     <text name="AdminPassword" value="Admin password" />
+	<text name="Customer" value="Customer"/>
 	<text name="CreateNewCustomer" value="Create new customer"/>  
+	<text name="EditCustomer" value="Edit customer"/>  
     <text name="Save" value="Save" />
     <text name="Cancel" value="Cancel" />
     <text name="TenantName_Regex_Description" value="Tenant name must be at least 2 chars, starts with a letter and continue with letter, number, dash or underscore." />
@@ -161,5 +179,6 @@
     <text name="StaffDeleteWarningMessage">Staff {0} will be deleted.</text>
     <text name="SelectUserWithStaffRoleInfo">Only users with the 'Staff' role who do not yet have a staff profile are shown.</text>
     <text name="NoAvailableStaffUserWarning">There are no users with the 'Staff' role available. Please assign the 'Staff' role to a user in the Users page first.</text>
+
   </texts>
 </localizationDictionary>

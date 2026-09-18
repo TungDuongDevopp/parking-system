@@ -1,14 +1,12 @@
+@using ParkingSystem.Web.Models.Common.Modals
 @using ParkingSystem.Web.Models.Staff
 @model EditStaffViewModel
 @{
     Layout = null;
 }
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditStaff")))
 <form name="StaffEditForm" role="form" class="form-horizontal">
     <input type="hidden" name="Id" value="@Model.Staff.Id" />
-    <div class="modal-header">
-        <h5 class="modal-title">@L("EditStaff"): @Model.Staff.Name</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
     <div class="modal-body">
         <div class="form-group row required mb-3">
             <label class="col-md-3 col-form-label">@L("Name")</label>
@@ -67,9 +65,6 @@
             </div>
         </div>
     </div>
-    <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@L("Cancel")</button>
-        <button type="submit" class="btn btn-primary save-button">@L("Save")</button>
-    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
 </form>
 <script src="~/view-resources/Views/Staff/_EditModal.js" asp-append-version="true"></script>

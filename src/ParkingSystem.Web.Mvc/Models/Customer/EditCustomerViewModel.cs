@@ -1,6 +1,6 @@
-﻿using ParkingSystem.Customers.Dto;
+using ParkingSystem.Customers.Dto;
 
-namespace ParkingSystem.Web.Models.Customers
+namespace ParkingSystem.Web.Models.Customer
 {
     public class EditCustomerViewModel
     {

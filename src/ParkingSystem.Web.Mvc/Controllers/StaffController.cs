@@ -13,73 +13,74 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ParkingSystem.Web.Controllers;
-
-[AbpMvcAuthorize(PermissionNames.Pages_Staffs)]
-public class StaffController : ParkingSystemControllerBase
+namespace ParkingSystem.Web.Controllers
 {
-    private readonly IStaffAppService _staffAppService;
-    private readonly UserManager _userManager;
-    private readonly IRepository<Staff, long> _staffRepository;
-
-    public StaffController(
-        IStaffAppService staffAppService,
-        UserManager userManager,
-        IRepository<Staff, long> staffRepository)
+    [AbpMvcAuthorize(PermissionNames.Pages_Staffs)]
+    public class StaffController : ParkingSystemControllerBase
     {
-        _staffAppService = staffAppService;
-        _userManager = userManager;
-        _staffRepository = staffRepository;
-    }
+        private readonly IStaffAppService _staffAppService;
+        private readonly UserManager _userManager;
+        private readonly IRepository<Staff, long> _staffRepository;
 
-    public async Task<IActionResult> Index()
-    {
-        var isManager = await IsGrantedAsync(PermissionNames.Pages_Staffs_Manager);
-        var availableUsers = new List<StaffUserLookupDto>();
-
-        if (isManager)
+        public StaffController(
+            IStaffAppService staffAppService,
+            UserManager userManager,
+            IRepository<Staff, long> staffRepository)
         {
-            var staffUsers = await _userManager.GetUsersInRoleAsync("Staff");
-            if (staffUsers == null || staffUsers.Count == 0)
-            {
-                staffUsers = await _userManager.GetUsersInRoleAsync("STAFF");
-            }
-
-            var existingStaffUserIds = await _staffRepository.GetAll()
-                .Select(s => s.UserId)
-                .ToListAsync();
-
-            availableUsers = staffUsers
-                .Where(u => !existingStaffUserIds.Contains(u.Id))
-                .Select(u => new StaffUserLookupDto
-                {
-                    Id = u.Id,
-                    UserName = u.UserName,
-                    FullName = u.FullName,
-                    EmailAddress = u.EmailAddress,
-                    PhoneNumber = u.PhoneNumber
-                })
-                .OrderBy(u => u.FullName)
-                .ToList();
+            _staffAppService = staffAppService;
+            _userManager = userManager;
+            _staffRepository = staffRepository;
         }
 
-        var model = new StaffListViewModel
+        public async Task<IActionResult> Index()
         {
-            AvailableUsers = availableUsers,
-            IsManager = isManager
-        };
+            var isManager = await IsGrantedAsync(PermissionNames.Pages_Staffs_Manager);
+            var availableUsers = new List<StaffUserLookupDto>();
 
-        return View(model);
-    }
+            if (isManager)
+            {
+                var staffUsers = await _userManager.GetUsersInRoleAsync("Staff");
+                if (staffUsers == null || staffUsers.Count == 0)
+                {
+                    staffUsers = await _userManager.GetUsersInRoleAsync("STAFF");
+                }
 
-    public async Task<ActionResult> EditModal(long staffId)
-    {
-        var staff = await _staffAppService.GetAsync(new EntityDto<long>(staffId));
-        var model = new EditStaffViewModel
+                var existingStaffUserIds = await _staffRepository.GetAll()
+                    .Select(s => s.UserId)
+                    .ToListAsync();
+
+                availableUsers = staffUsers
+                    .Where(u => !existingStaffUserIds.Contains(u.Id))
+                    .Select(u => new StaffUserLookupDto
+                    {
+                        Id = u.Id,
+                        UserName = u.UserName,
+                        FullName = u.FullName,
+                        EmailAddress = u.EmailAddress,
+                        PhoneNumber = u.PhoneNumber
+                    })
+                    .OrderBy(u => u.FullName)
+                    .ToList();
+            }
+
+            var model = new StaffListViewModel
+            {
+                AvailableUsers = availableUsers,
+                IsManager = isManager
+            };
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> EditModal(long staffId)
         {
-            Staff = staff
-        };
+            var staff = await _staffAppService.GetAsync(new EntityDto<long>(staffId));
+            var model = new EditStaffViewModel
+            {
+                Staff = staff
+            };
 
-        return PartialView("_EditModal", model);
+            return PartialView("_EditModal", model);
+        }
     }
 }

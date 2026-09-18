@@ -14,5 +14,6 @@ public class PageNames
     public const string Customers = "Customers";
 
     public const string Staffs = "Staffs";
+    public const string Vehicles = "Vehicles";
 
 }
