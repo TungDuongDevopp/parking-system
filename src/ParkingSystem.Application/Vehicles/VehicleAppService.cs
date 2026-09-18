@@ -1,4 +1,4 @@
-﻿
+
 
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
@@ -93,32 +93,30 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
 
     protected override IQueryable<Vehicle> CreateFilteredQuery(PagedVehicleResultRequestDto input)
     {
-        var query = Repository.GetAll().AsNoTracking();
+        IQueryable<Vehicle> query = Repository.GetAll().AsNoTracking()
+            .Include(x => x.Customer);
 
-    
         var canViewAll = PermissionChecker.IsGranted(PermissionNames.Pages_Vehicles_ViewAll);
         if (!canViewAll)
         {
-            var userId = AbpSession.UserId ?? throw new AbpAuthorizationException("User is not logged in."); ;
+            var userId = AbpSession.UserId ?? throw new AbpAuthorizationException("User is not logged in.");
             query = query.Where(x => x.Customer.UserId == userId);
         }
         else
         {
             query = query.WhereIf(
-            input.CustomerId.HasValue,
-            x => x.CustomerId == input.CustomerId);
+                input.CustomerId.HasValue,
+                x => x.CustomerId == input.CustomerId);
         }
+
         return query
             .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x =>
                 x.Brand.Contains(input.Keyword) ||
                 x.Color.Contains(input.Keyword) ||
                 x.LicensePlate.Contains(input.Keyword) ||
                 x.VehicleCode.Contains(input.Keyword))
-
-        .WhereIf(input.VehicleType.HasValue,
-            x => x.VehicleType == input.VehicleType.Value)
-        ;  
-     
+            .WhereIf(input.VehicleType.HasValue,
+                x => x.VehicleType == input.VehicleType.Value);
     }
     
 
@@ -135,8 +133,15 @@ public class VehicleAppService : AsyncCrudAppService<Vehicle, VehicleDto, long, 
              nameof(Vehicle.Color),
              nameof(Vehicle.CustomerId),
              nameof(Vehicle.CreationTime),
-             nameof(Vehicle.VehicleCode)
+             nameof(Vehicle.VehicleCode),
+             nameof(Vehicle.LicensePlate),
+              "customerName"
               );
+            if (sorting == "customerName desc")
+                return query.OrderByDescending(x => x.Customer.Name);
+
+            if (sorting == "customerName asc")
+                return query.OrderBy(x => x.Customer.Name);
 
             return query.OrderBy(sorting);
         }

@@ -1,4 +1,4 @@
-﻿
+
 
 using Abp.Application.Services.Dto;
 using ParkingSystem.Entities.Enums;
@@ -22,5 +22,6 @@ public class VehicleDto : EntityDto<long>
     public DateTime CreationTime { get; set; }
     public bool IsDeleted { get; set; }
 
-    public long CustomerId { get; set;}
+    public long CustomerId { get; set; }
+    public string CustomerName { get; set; }
 }

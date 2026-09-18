@@ -88,8 +88,16 @@ public class StaffAppService: AsyncCrudAppService<Staff, StaffDto, long, PagedSt
              nameof(Staff.CreationTime),
              nameof(Staff.HiredDate),
              nameof(Staff.Status),
-             nameof(Staff.DateOfBirth)
+             nameof(Staff.DateOfBirth),
+             nameof(Staff.Name),
+             nameof(Staff.PhoneNumber),
+             nameof(Staff.Gender)
               );
+            if (sorting == "Gender asc")
+                return query.OrderByDescending(x => x.Gender);
+
+            if (sorting == "Gender desc")
+                return query.OrderBy(x => x.Gender);
 
             return query.OrderBy(sorting);
         }

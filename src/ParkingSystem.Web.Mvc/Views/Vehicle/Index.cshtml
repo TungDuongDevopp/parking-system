@@ -1,24 +1,24 @@
 @using ParkingSystem.Web.Startup
 @using ParkingSystem.Authorization
 @{
-    ViewBag.Title = L("Customers");
-    ViewBag.CurrentPageName = PageNames.Customers;
+    ViewBag.Title = L("Vehicles");
+    ViewBag.CurrentPageName = PageNames.Vehicles;
 }
 @section scripts
 {
-    <script src="~/view-resources/Views/Customer/Index.js" asp-append-version="true"></script>
+    <script src="~/view-resources/Views/Vehicle/Index.js" asp-append-version="true"></script>
 }
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h1>@L("Customers")</h1>
+                <h1>@L("Vehicles")</h1>
             </div>
             <div class="col-sm-6">
-                @if (IsGranted(PermissionNames.Pages_Customers))
+                @if (IsGranted(PermissionNames.Pages_Vehicles))
                 {
-                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#CustomerCreateModal" class="btn bg-blue float-sm-right">
+                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#VehicleCreateModal" class="btn bg-blue float-sm-right">
                         <i class="fa fa-plus-square"></i> @L("Create")
                     </a>
                 }
@@ -31,17 +31,20 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                @await Html.PartialAsync("~/Views/Customer/Index.AdvancedSearch.cshtml")
+                @await Html.PartialAsync("~/Views/Vehicle/Index.AdvancedSearch.cshtml")
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="CustomersTable" class="table table-striped table-bordered table-hover w-100">
+                    <table id="VehiclesTable" class="table table-striped table-bordered table-hover w-100">
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>@L("Name")</th>
-                                <th>@L("PhoneNumber")</th>
-                                <th>@L("EmailAddress")</th>
+                                <th>@L("VehicleCode")</th>
+                                <th>@L("VehicleType")</th>
+                                <th>@L("LicensePlate")</th>
+                                <th>@L("Brand")</th>
+                                <th>@L("Color")</th>
+                                <th>@L("CustomerName")</th>
                                 <th>@L("CreationTime")</th>
                                 <th style="width: 150px">@L("Actions")</th>
                             </tr>
@@ -54,7 +57,7 @@
     </div>
 </section>
 
-@await Html.PartialAsync("~/Views/Vehicle/_CreateModal.cshtml").
+@await Html.PartialAsync("~/Views/Vehicle/_CreateModal.cshtml")
 
 <div class="modal fade" id="VehicleEditModal" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">

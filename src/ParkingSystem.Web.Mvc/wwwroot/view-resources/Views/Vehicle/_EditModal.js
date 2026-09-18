@@ -1,16 +1,15 @@
 (function ($) {
     // 1. SERVICES, LOCALIZATION & DOM ELEMENTS
-    var _staffService = abp.services.app.staff,
+    var _vehicleService = abp.services.app.vehicle,
         l = abp.localization.getSource("ParkingSystem"),
-        _$modal = $("#StaffEditModal"),
+        _$modal = $("#VehicleEditModal"),
         _$form = _$modal.find("form");
 
     // 2. FORM VALIDATION (EDIT)
     _$form.validate({
         rules: {
-            Name: "required",
-            PhoneNumber: "required",
-            HiredDate: "required"
+            VehicleType: "required",
+            Color: "required"
         }
     });
 
@@ -20,16 +19,13 @@
             return;
         }
 
-        var staff = _$form.serializeFormToObject();
-        if (staff.Gender === "true") staff.Gender = true;
-        else if (staff.Gender === "false") staff.Gender = false;
-        else staff.Gender = null;
+        var vehicle = _$form.serializeFormToObject();
 
         abp.ui.setBusy(_$form);
-        _staffService.update(staff).done(function () {
+        _vehicleService.update(vehicle).done(function () {
             _$modal.modal("hide");
             abp.notify.info(l("SavedSuccessfully"));
-            abp.event.trigger("staff.edited", staff);
+            abp.event.trigger("vehicle.edited", vehicle);
         }).always(function () {
             abp.ui.clearBusy(_$form);
         });

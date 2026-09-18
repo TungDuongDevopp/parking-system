@@ -61,8 +61,14 @@ public class ParkingSystemNavigationProvider : NavigationProvider
                     icon: "fas fa-user-tie",
                     permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Staffs)
                 )
-
-            );
+            ).AddItem(
+                new MenuItemDefinition(
+                    PageNames.Vehicles,
+                    L("Vehicles"),
+                    url: "Vehicle",
+                    icon: "fas fa-car",
+                    permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Vehicles)
+                ));
 
     }
 

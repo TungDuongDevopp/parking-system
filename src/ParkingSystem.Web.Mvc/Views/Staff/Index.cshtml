@@ -1,6 +1,7 @@
 @using ParkingSystem.Web.Startup
 @using ParkingSystem.Web.Models.Staff
 @using ParkingSystem.Entities.Enums
+@using ParkingSystem.Authorization
 @model StaffListViewModel
 @{
     ViewBag.Title = L("Staffs");
@@ -18,7 +19,7 @@
                 <h1>@L("Staffs")</h1>
             </div>
             <div class="col-sm-6">
-                @if (Model.IsManager)
+                @if (IsGranted(PermissionNames.Pages_Staffs_Manager))
                 {
                     <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#StaffCreateModal" class="btn bg-blue float-sm-right">
                         <i class="fa fa-plus-square"></i> @L("Create")
